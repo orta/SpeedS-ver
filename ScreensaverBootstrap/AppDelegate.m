@@ -9,11 +9,17 @@
 #import "AppDelegate.h"
 #import "GamesScreensaverView.h"
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    GamesScreensaverView *_screensaver;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    GamesScreensaverView *screensaver = [[GamesScreensaverView alloc] initWithFrame:_mainView.bounds isPreview:NO];
-    [_mainView addSubview:screensaver];
+     _screensaver = [[GamesScreensaverView alloc] initWithFrame:_mainView.bounds isPreview:NO];
+    [_mainView addSubview:_screensaver];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [_screensaver stopAnimation];
 }
 
 @end
