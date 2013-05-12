@@ -200,9 +200,7 @@
                             NSString *url = [[[videoComponents objectForKey:@"url"] objectAtIndex:0] stringByDecodingURLFormat];
                             url = [NSString stringWithFormat:@"%@&signature=%@", url, signature];
                             
-                            NSString *quality = [[[videoComponents objectForKey:@"quality"] objectAtIndex:0] stringByDecodingURLFormat];
-                            
-                            NSLog(@"Found video for quality: %@", quality);
+                            NSString *quality = [[[videoComponents objectForKey:@"quality"] objectAtIndex:0] stringByDecodingURLFormat];    
                             [videoDictionary setObject:url forKey:quality];
                         }
                     }

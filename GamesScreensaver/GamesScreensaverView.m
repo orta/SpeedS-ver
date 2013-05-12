@@ -13,100 +13,127 @@
 #import "NSFileManager+DirectoryLocations.h"
 #import "AFDownloadRequestOperation.h"
 #import "DDProgressView.h"
+#import "NSString+MD5.h"
+#import "ScreenSaverConfig.h"
 
 // Switch form using the bootstrapped defaults to the
 // ScreenSaver defaults thing
 
-#if FALSE
+#if YES
     #define standardUserDefaults defaultsForModuleWithName:@"Games"
 #endif
 
-static const CGSize ThumbnailSize = { 300.0, 400.0 };
+static const CGSize ThumbnailSize = { 320.0, 260.0 };
 static const CGSize ProgressSize = { 300.0, 24.0 };
+
 static NSString *ProgressDefault = @"ProgressDefault";
+static NSString *FileMD5Default = @"FileMD5Default";
+static NSString *YoutubeURLDefault = @"YoutubeURLDefault";
+static NSString *MovieNameDefault = @"MovieNameDefault";
 
 @implementation GamesScreensaverView {
     NSString *_currentVideoPath;
+    NSString *_currentVideoURL;
+    
     NSInteger _numberOfFailedRequests;
+    BOOL _isPreview;
 
     DDProgressView *_progressView;
     NSImageView *_thumbnailImageView;
     QTMovieView *_movieView;
     QTMovie *_movie;
+    ScreenSaverConfig *_config;
 }
 
 - (id)initWithFrame:(NSRect)frame isPreview:(BOOL)isPreview {
     self = [super initWithFrame:frame isPreview:isPreview];
 
     if (self) {
-        if (!isPreview) {
-
-            NSString *filePath = [[NSFileManager defaultManager] applicationSupportDirectory];
-            _currentVideoPath = [filePath stringByAppendingPathComponent:@"movie.mp4"];
-
-            if ([[NSFileManager defaultManager] fileExistsAtPath:_currentVideoPath]){
-                [self playDownloadedFileAtPath:_currentVideoPath];
-            } else {
-                [self getRandomVideo];
-            }
-
-        } else {
-            [self setupPreview];
-        }
-
+        [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+        [self setAutoresizesSubviews:YES];
+        _isPreview = isPreview;
+        _config = [[ScreenSaverConfig alloc] init];
     }
     return self;
 }
 
-- (void)setupPreview {
-    // TODO
+
+- (void)startAnimation {
+    [super startAnimation];
+
+    NSString *md5Filename = [[NSUserDefaults standardUserDefaults] stringForKey:FileMD5Default];
+    if (md5Filename) {
+        _currentVideoURL = [[NSUserDefaults standardUserDefaults] stringForKey:YoutubeURLDefault];
+        _currentVideoPath = [self appSupportPathWithFilename:md5Filename];
+    }
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_currentVideoPath]){
+        [self playDownloadedFileAtPath:_currentVideoPath];
+    } else {
+        [self getNextVideo];
+    }
 }
 
-- (void)getRandomVideo {
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"metadata" ofType:@"json"];
-    NSError *error = nil;
-    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath options:NSDataReadingMappedIfSafe error:&error];
-    if (error) {
-        NSLog(@"Data Error : %@", error.localizedDescription);
-        return;
+- (void)stopAnimation {
+    [super stopAnimation];
+
+    if (_movieView) {
+        NSString *time = QTStringFromTime(_movie.currentTime);
+        [[NSUserDefaults standardUserDefaults] setValue:time forKey:ProgressDefault];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
+        [_movie stop];
+    }
+}
+
+- (void)setupPreview {
+    NSTextField *textField = [[NSTextField alloc] initWithFrame:self.bounds];
+    [textField setStringValue:@"NO PREVIEW"];
+    [self addSubview:textField];
+}
+
+- (void)getNextVideo {
+    if (!_currentVideoPath || !_currentVideoURL) {
+
+        // If we have both of the above then skip finding
+        // a new one from the JSON.
+
+        NSArray *json = [_config appMetadata];
+        NSInteger categoryIndex = arc4random() % json.count;
+        NSDictionary *category = json[categoryIndex];
+
+        //    NSString *console = category[@"console"];
+        NSArray *movies = category[@"movies"];
+        NSInteger movieIndex = arc4random() % movies.count;
+        NSDictionary *movie = movies[movieIndex];
+
+        NSString *videoName = movie[@"name"];
+        _currentVideoURL = movie[@"url"];
+        _currentVideoPath = [self appSupportPathWithFilename:[videoName MD5Hash]];
+
+        [[NSUserDefaults standardUserDefaults] setObject:videoName forKey:MovieNameDefault];
+        [[NSUserDefaults standardUserDefaults] setObject:[videoName MD5Hash] forKey:FileMD5Default];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
     }
 
-    NSArray *json = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
-    if (error) {
-        NSLog(@"JSON Error : %@", error.localizedDescription);
-        return;
-    }
-
-    NSInteger categoryIndex = arc4random() % json.count;
-    NSDictionary *category = json[categoryIndex];
-
-    NSString *console = category[@"console"];
-
-    NSArray *movies = category[@"movies"];
-    NSInteger movieIndex = arc4random() % movies.count;
-    NSDictionary *movie = movies[movieIndex];
-
-    NSString *videoName = movie[@"name"];
-    NSURL *videoURL = [NSURL URLWithString: movie[@"url"]];
-
-    [HCYoutubeParser thumbnailForYoutubeURL:videoURL thumbnailSize:YouTubeThumbnailDefaultMaxQuality completeBlock:^(NSImage *image, NSError *error) {
+    NSURL *youtubeURL = [NSURL URLWithString:_currentVideoURL];
+    [HCYoutubeParser thumbnailForYoutubeURL:youtubeURL thumbnailSize:YouTubeThumbnailDefaultMaxQuality completeBlock:^(NSImage *image, NSError *error) {
         [self addThumbnailWithImage:image];
     }];
 
-    [HCYoutubeParser h264videosWithYoutubeURL:videoURL completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
-        NSArray *orderedByAwesome = @[@"hd1080", @"hd720", @"highres", @"medium", @"small"];
-//        NSArray *orderedByAwesome = @[@"small"];
+    [HCYoutubeParser h264videosWithYoutubeURL:youtubeURL completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
         NSString *key = nil;
-        for (NSString *potentialKey in orderedByAwesome.reverseObjectEnumerator) {
+        for (NSString *potentialKey in _config.availableYoutubeSizes.reverseObjectEnumerator) {
             if(videoDictionary[potentialKey]){
                 key = potentialKey;
             }
         }
         
-        NSString *youtubeURL = videoDictionary[key];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:youtubeURL]];
+        NSString *youtubeMP4URL = videoDictionary[key];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:youtubeMP4URL]];
         
-        AFDownloadRequestOperation *download = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:_currentVideoPath shouldResume:NO];
+        AFDownloadRequestOperation *download = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:_currentVideoPath shouldResume:YES];
         [download setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             [self removeProgressIndicator];
             [self removeThumbnailImage];
@@ -114,8 +141,7 @@ static NSString *ProgressDefault = @"ProgressDefault";
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if (_numberOfFailedRequests != 5) {
-                [self getRandomVideo];
-                return;
+                [self getNextVideo];
             }
             _numberOfFailedRequests++;
         }];
@@ -132,8 +158,9 @@ static NSString *ProgressDefault = @"ProgressDefault";
 - (void)addProgressIndicatorToView {
     CGFloat margin = 16;
     CGRect progressRect = CGRectMake(CGRectGetWidth(self.bounds)/2 - ProgressSize.width/2,
-                                  CGRectGetHeight(self.bounds)/2 - ProgressSize.height/2 - ThumbnailSize.height / 2 - margin,
-                                  ProgressSize.width, ProgressSize.height);
+                          CGRectGetHeight(self.bounds)/2 - ProgressSize.height - ThumbnailSize.height / 2 - margin,
+                          ProgressSize.width, ProgressSize.height);
+    
     _progressView = [[DDProgressView alloc] initWithFrame:progressRect];
     [self addSubview:_progressView];
 }
@@ -160,7 +187,10 @@ static NSString *ProgressDefault = @"ProgressDefault";
 
 - (void)playDownloadedFileAtPath:(NSString *)path {
     _movieView = [[QTMovieView alloc] initWithFrame:self.bounds];
-    [_movieView setControllerVisible:NO];
+//    [_movieView setControllerVisible:NO];
+    _movieView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    _movieView.autoresizesSubviews = YES;
+    _movieView.preservesAspectRatio = YES;
     
     NSError *error = nil;
     _movie = [QTMovie movieWithFile:path error:&error];
@@ -170,7 +200,10 @@ static NSString *ProgressDefault = @"ProgressDefault";
     [_movieView setMovie:_movie];
 
     [self addSubview:_movieView];
-    [_movieView play:self];
+
+    if (!_isPreview) {
+        [_movieView play:self];
+    }
 
     NSString *timeString = [[NSUserDefaults standardUserDefaults] stringForKey:ProgressDefault];
     if (timeString) {
@@ -178,7 +211,6 @@ static NSString *ProgressDefault = @"ProgressDefault";
     }
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:QTMovieDidEndNotification object:_movie];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieProgress) name:QTMovieTimeDidChangeNotification object:_movie];
 }
 
 - (void)movieEnded {
@@ -189,29 +221,23 @@ static NSString *ProgressDefault = @"ProgressDefault";
         return;
     }
 
+    _currentVideoURL = nil;
+    _currentVideoPath = nil;
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:MovieNameDefault];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:FileMD5Default];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:ProgressDefault];
+
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [_movieView removeFromSuperview];
-    [self getRandomVideo];
+    [self getNextVideo];
 }
 
-- (void)startAnimation {
-    [super startAnimation];
-}
-
-- (void)stopAnimation {
-    [super stopAnimation];
-
-    if (_movieView) {
-        NSString *time = QTStringFromTime(_movie.currentTime);
-        [[NSUserDefaults standardUserDefaults] setValue:time forKey:ProgressDefault];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-}
-
-- (void)drawRect:(NSRect)rect {
-    [super drawRect:rect];
+- (NSString *)appSupportPathWithFilename:(NSString *)filename {
+    NSString *filePath = [[NSFileManager defaultManager] applicationSupportDirectory];
+    NSString *fileWithExtention = [NSString stringWithFormat:@"%@.mp4", filename];
+    return [filePath stringByAppendingPathComponent:fileWithExtention];
 }
 
 - (void)animateOneFrame {
@@ -219,11 +245,11 @@ static NSString *ProgressDefault = @"ProgressDefault";
 }
 
 - (BOOL)hasConfigureSheet {
-    return NO;
+    return YES;
 }
 
-- (NSWindow*)configureSheet {
-    return nil;
+- (NSWindow *)configureSheet {
+    return [_config configureWindow];
 }
 
 @end
