@@ -13,10 +13,10 @@
 
 + (NSUserDefaults *)userDefaults {
     // When in the bootstrap, use defaults
-    return [self standardUserDefaults];
+  //  return [self standardUserDefaults];
 
     // Otherwise use ScreenSaverDefaults
-//    return [ScreenSaverDefaults defaultsForModuleWithName:@"TAS-Games-Saver"];
+    return [ScreenSaverDefaults defaultsForModuleWithName:@"TAS-Games-Saver"];
 }
 
 @end

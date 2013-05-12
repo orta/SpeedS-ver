@@ -10,6 +10,12 @@
 		60756727173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 60756725173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h */; };
 		60756728173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */; };
 		60756729173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */; };
+		6075672E173F935000E0732D /* orta.png in Resources */ = {isa = PBXBuildFile; fileRef = 6075672A173F935000E0732D /* orta.png */; };
+		6075672F173F935000E0732D /* orta.png in Resources */ = {isa = PBXBuildFile; fileRef = 6075672A173F935000E0732D /* orta.png */; };
+		60756737173F94A200E0732D /* github_icon_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 60756736173F94A200E0732D /* github_icon_black.png */; };
+		60756738173F94A200E0732D /* github_icon_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 60756736173F94A200E0732D /* github_icon_black.png */; };
+		6075673A173F94A700E0732D /* twitter_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 60756739173F94A700E0732D /* twitter_black.png */; };
+		6075673B173F94A700E0732D /* twitter_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 60756739173F94A700E0732D /* twitter_black.png */; };
 		60B0D0E517380C14000DA458 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E417380C14000DA458 /* Cocoa.framework */; };
 		60B0D0E717380C14000DA458 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E617380C14000DA458 /* ScreenSaver.framework */; };
 		60B0D0F117380C14000DA458 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60B0D0EF17380C14000DA458 /* InfoPlist.strings */; };
@@ -83,6 +89,9 @@
 /* Begin PBXFileReference section */
 		60756725173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+ScreenSaverDefaults.h"; sourceTree = "<group>"; };
 		60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+ScreenSaverDefaults.m"; sourceTree = "<group>"; };
+		6075672A173F935000E0732D /* orta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orta.png; sourceTree = "<group>"; };
+		60756736173F94A200E0732D /* github_icon_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = github_icon_black.png; sourceTree = "<group>"; };
+		60756739173F94A700E0732D /* twitter_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_black.png; sourceTree = "<group>"; };
 		60B0D0E117380C14000DA458 /* GamesScreensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesScreensaver.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B0D0E417380C14000DA458 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60B0D0E617380C14000DA458 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
@@ -245,6 +254,9 @@
 		60B0D0ED17380C14000DA458 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				60756736173F94A200E0732D /* github_icon_black.png */,
+				60756739173F94A700E0732D /* twitter_black.png */,
+				6075672A173F935000E0732D /* orta.png */,
 				60E26DDF173E953800DF7CED /* NSString+MD5.h */,
 				60E26DE0173E953900DF7CED /* NSString+MD5.m */,
 				60E26DDA173E5F0300DF7CED /* DDProgressView.h */,
@@ -415,6 +427,9 @@
 				60B0D0F117380C14000DA458 /* InfoPlist.strings in Resources */,
 				60E26D98173E415700DF7CED /* metadata.json in Resources */,
 				60E26DE6173EFAEC00DF7CED /* Settings.xib in Resources */,
+				6075672E173F935000E0732D /* orta.png in Resources */,
+				60756737173F94A200E0732D /* github_icon_black.png in Resources */,
+				6075673A173F94A700E0732D /* twitter_black.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +442,9 @@
 				60E26D8F173E2F7900DF7CED /* MainMenu.xib in Resources */,
 				60E26D99173E415700DF7CED /* metadata.json in Resources */,
 				60E26DE7173EFAEC00DF7CED /* Settings.xib in Resources */,
+				6075672F173F935000E0732D /* orta.png in Resources */,
+				60756738173F94A200E0732D /* github_icon_black.png in Resources */,
+				6075673B173F94A700E0732D /* twitter_black.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

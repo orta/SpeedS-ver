@@ -8,6 +8,7 @@
 
 #import "ScreenSaverConfig.h"
 #import "NSUserDefaults+ScreenSaverDefaults.h"
+#import <QuartzCore/QuartzCore.h>
 
 static NSArray *YoutubeSizes;
 static NSString *SizeIndexDefault = @"SizeIndexDefault";
@@ -19,11 +20,17 @@ static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
     IBOutlet NSPopUpButtonCell *_popupButtonCell;
     IBOutlet NSTableColumn *_titleTableColumn;
 
+    IBOutlet NSView *_aboutView;
+    IBOutlet NSView *_settingsView;
+
     NSInteger _sizeIndex;
     NSMutableArray *_consoleAvailabilities;
 
     NSArray *_allAppMetadata;
     NSArray *_publicAppMetaData;
+
+    BOOL _showingAbout;
+    BOOL _installedTweetbot;
 }
 
 - (id)init {
@@ -66,6 +73,10 @@ static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
 }
 
 - (void)awakeFromNib {
+    NSString *tweetbotBundle = @"com.tapbots.TweetbotMac";
+    NSString *tweetBotPath = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:tweetbotBundle];
+    _installedTweetbot = (tweetBotPath != nil);
+
     [_popupButtonCell selectItemAtIndex:_sizeIndex];
 }
 
@@ -129,9 +140,7 @@ static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
 - (void)checkedConsole:(NSTableView *)tableView {
     NSInteger index = [tableView selectedTag];
     if ([_consoleAvailabilities[index] boolValue]) {
-        if (_consoleAvailabilities.count < 1) {
-            [_consoleAvailabilities replaceObjectAtIndex:index withObject:@(NO)];
-        }
+        [_consoleAvailabilities replaceObjectAtIndex:index withObject:@(NO)];
     } else {
         [_consoleAvailabilities replaceObjectAtIndex:index withObject:@(YES)];
     }
@@ -179,5 +188,43 @@ static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
         @(NO),  //Colecovision
      ] mutableCopy];
 }
+
+// About section
+
+- (IBAction)aboutTapped:(NSButton *)sender {
+    _showingAbout = !_showingAbout;
+    if (_showingAbout) {
+        [sender setTitle:@"Back"];
+    } else {
+        [sender setTitle:@"About"];
+    }
+    CGRect _aboutFrame = _aboutView.frame;
+    CGRect _settingsFrame = _settingsView.frame;
+    [[_aboutView animator] setFrame:_settingsFrame];
+    [[_settingsView animator] setFrame:_aboutFrame];
+}
+
+- (IBAction)githubTapped:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://github.com/orta/"]];
+}
+
+- (IBAction)twitterTapped:(id)sender {
+
+    if (_installedTweetbot) {
+        NSTask *task;
+        task = [[NSTask alloc] init];
+        [task setLaunchPath: @"/usr/bin/open"];
+        [task setArguments:@[ @"tweetbot://orta/user_profile/orta"]];
+        [task launch];
+
+    } else {
+        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://twitter.com/orta/"]];
+    }
+}
+
+- (IBAction)ortaTapped:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://orta.github.io/"]];
+}
+
 
 @end
