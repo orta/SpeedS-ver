@@ -120,6 +120,7 @@
 - (void)setCompletionBlockWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
 @end
 
 ///----------------

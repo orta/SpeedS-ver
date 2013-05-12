@@ -348,7 +348,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
         return;
     }
 
-    __weak __typeof(&*self)weakSelf = self;
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
     AFNetworkReachabilityStatusBlock callback = ^(AFNetworkReachabilityStatus status) {
         __strong __typeof(&*weakSelf)strongSelf = weakSelf;
         if (!strongSelf) {
@@ -602,7 +602,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
     for (AFHTTPRequestOperation *operation in operations) {
         AFCompletionBlock originalCompletionBlock = [operation.completionBlock copy];
-        __weak __typeof(&*operation)weakOperation = operation;
+        __unsafe_unretained __typeof(&*operation)weakOperation = operation;
         operation.completionBlock = ^{
             __strong __typeof(&*weakOperation)strongOperation = weakOperation;
             dispatch_queue_t queue = strongOperation.successCallbackQueue ?: dispatch_get_main_queue();

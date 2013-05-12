@@ -1295,7 +1295,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{426, 196}, {734, 524}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">ScreensaverBootstrap</string>
+				<string key="NSWindowTitle"/>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>

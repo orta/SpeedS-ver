@@ -315,6 +315,9 @@ NSCoding, NSCopying>
  */
 - (void)setCacheResponseBlock:(NSCachedURLResponse * (^)(NSURLConnection *connection, NSCachedURLResponse *cachedResponse))block;
 
+
+- (void)connection:(NSURLConnection __unused *)connection didReceiveResponse:(NSURLResponse *)response;
+
 @end
 
 ///----------------

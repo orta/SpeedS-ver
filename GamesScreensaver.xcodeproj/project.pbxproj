@@ -618,6 +618,7 @@
 				GCC_PREFIX_HEADER = "GamesScreensaver/GamesScreensaver-Prefix.pch";
 				INFOPLIST_FILE = "GamesScreensaver/GamesScreensaver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = saver;
 			};
@@ -633,6 +634,7 @@
 				GCC_PREFIX_HEADER = "GamesScreensaver/GamesScreensaver-Prefix.pch";
 				INFOPLIST_FILE = "GamesScreensaver/GamesScreensaver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = saver;
 			};
