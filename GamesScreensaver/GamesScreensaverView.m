@@ -18,16 +18,20 @@
 #import "ScreenSaverConfig.h"
 
 static const CGSize ThumbnailSize = { 320.0, 260.0 };
-static const CGSize ProgressSize = { 300.0, 24.0 };
+static const CGSize ProgressSize = { 300.0, 20.0 };
+static const CGSize LabelSize = { 300.0, 48.0 };
 
 static NSString *ProgressDefault = @"ProgressDefault";
 static NSString *FileMD5Default = @"FileMD5Default";
 static NSString *YoutubeURLDefault = @"YoutubeURLDefault";
 static NSString *MovieNameDefault = @"MovieNameDefault";
+static NSString *MuteDefault = @"MuteDefault";
+
 
 @implementation GamesScreensaverView {
     NSString *_currentVideoPath;
     NSString *_currentVideoURL;
+    NSString *_currentMovieName;
     
     NSInteger _numberOfFailedRequests;
     BOOL _isPreview;
@@ -36,6 +40,8 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
     NSImageView *_thumbnailImageView;
     QTMovieView *_movieView;
     QTMovie *_movie;
+    NSTextField *_infoLabel;
+
     ScreenSaverConfig *_config;
 }
 
@@ -101,12 +107,12 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
         NSInteger movieIndex = arc4random() % movies.count;
         NSDictionary *movie = movies[movieIndex];
 
-        NSString *videoName = movie[@"name"];
+        _currentMovieName = movie[@"name"];
         _currentVideoURL = movie[@"url"];
-        _currentVideoPath = [self appSupportPathWithFilename:[videoName MD5Hash]];
+        _currentVideoPath = [self appSupportPathWithFilename:[_currentMovieName MD5Hash]];
 
-        [[NSUserDefaults userDefaults] setObject:videoName forKey:MovieNameDefault];
-        [[NSUserDefaults userDefaults] setObject:[videoName MD5Hash] forKey:FileMD5Default];
+        [[NSUserDefaults userDefaults] setObject:_currentMovieName forKey:MovieNameDefault];
+        [[NSUserDefaults userDefaults] setObject:[_currentMovieName MD5Hash] forKey:FileMD5Default];
         [[NSUserDefaults userDefaults] synchronize];
 
     }
@@ -142,14 +148,22 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
 
         [download setProgressiveDownloadProgressBlock:^(AFDownloadRequestOperation *operation, NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
             _progressView.progress = totalBytesReadForFile / (CGFloat)totalBytesExpectedToReadForFile;
+
+            NSString *doneString = [self humanStringFromBytes:totalBytesReadForFile];
+            NSString *todoString = [self humanStringFromBytes:totalBytesExpectedToReadForFile];
+            NSString *labelString = [NSString stringWithFormat:@"%@ (%@/%@)", _currentMovieName, doneString, todoString];
+            [_infoLabel setStringValue:labelString];
         }];
 
         [self addProgressIndicatorToView];
+        [self addMovieLabel];
         [download start];
     }];
 }
 
 - (void)addProgressIndicatorToView {
+    [self removeProgressIndicator];
+    
     CGFloat margin = 16;
     CGRect progressRect = CGRectMake(CGRectGetWidth(self.bounds)/2 - ProgressSize.width/2,
                           CGRectGetHeight(self.bounds)/2 - ProgressSize.height - ThumbnailSize.height / 2 - margin,
@@ -165,6 +179,8 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
 }
 
 - (void)addThumbnailWithImage:(NSImage *)image {
+    [self removeThumbnailImage];
+    
     CGRect imageRect = CGRectMake(CGRectGetWidth(self.bounds)/2 - ThumbnailSize.width/2,
                                   CGRectGetHeight(self.bounds)/2 - ThumbnailSize.height/2,
                                   ThumbnailSize.width, ThumbnailSize.height);
@@ -177,6 +193,28 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
 - (void)removeThumbnailImage {
     [_thumbnailImageView removeFromSuperview];
     _thumbnailImageView = nil;
+}
+
+- (void)addMovieLabel {
+    [self removeLabel];
+    CGFloat margin = 56 + ProgressSize.height;
+    CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds)/2 - LabelSize.width/2,
+                                  CGRectGetHeight(self.bounds)/2 - ProgressSize.height - ThumbnailSize.height / 2 - margin,
+                                  LabelSize.width, LabelSize.height);
+
+    _infoLabel = [[NSTextField alloc] initWithFrame:labelRect];
+    [_infoLabel setStringValue:@""];
+    [_infoLabel setBackgroundColor:[NSColor blackColor]];
+    [_infoLabel setTextColor:[NSColor whiteColor]];
+    [_infoLabel setBordered:NO];
+    [_infoLabel setAlignment:NSCenterTextAlignment];
+    [self addSubview:_infoLabel];
+}
+
+- (void)removeLabel {
+    [_infoLabel removeFromSuperview];
+    _infoLabel = nil;
+
 }
 
 - (void)playDownloadedFileAtPath:(NSString *)path {
@@ -197,6 +235,11 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
 
     if (!_isPreview) {
         [_movieView play:self];
+    }
+
+    BOOL muted = [[NSUserDefaults userDefaults] boolForKey:MuteDefault];
+    if (muted) {
+        [_movie setVolume:0];
     }
 
     NSString *timeString = [[NSUserDefaults userDefaults] stringForKey:ProgressDefault];
@@ -245,5 +288,28 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
 - (NSWindow *)configureSheet {
     return [_config configureWindow];
 }
+
+- (NSString *)humanStringFromBytes:(double)bytes {
+    if (bytes < 0) {
+        bytes *= -1;
+    }
+
+    static const char units[] = { '\0', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
+    static int maxUnits = sizeof units - 1;
+
+    int multiplier = 1000;
+    int exponent = 0;
+
+    while (bytes >= multiplier && exponent < maxUnits) {
+        bytes /= multiplier;
+        exponent++;
+    }
+
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setMaximumFractionDigits:0];
+    // Beware of reusing this format string. -[NSString stringWithFormat] ignores \0, *printf does not.
+    return [NSString stringWithFormat:@"%@ %cB", [formatter stringFromNumber: @(bytes)], units[exponent]];
+}
+
 
 @end

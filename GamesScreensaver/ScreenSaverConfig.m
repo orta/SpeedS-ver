@@ -13,13 +13,15 @@
 static NSArray *YoutubeSizes;
 static NSString *SizeIndexDefault = @"SizeIndexDefault";
 static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
+static NSString *MuteDefault = @"MuteDefault";
 
 @implementation ScreenSaverConfig {
     IBOutlet NSWindow *_configureSheet;
     IBOutlet NSButton *_okButton;
     IBOutlet NSPopUpButtonCell *_popupButtonCell;
     IBOutlet NSTableColumn *_titleTableColumn;
-
+    IBOutlet NSButton *_muteCheckBox;
+    
     IBOutlet NSView *_aboutView;
     IBOutlet NSView *_settingsView;
 
@@ -61,6 +63,12 @@ static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
     [[NSApplication sharedApplication] endSheet:_configureSheet];
 }
 
+- (IBAction)muteTapped:(NSButton *)sender {
+    BOOL state = ([sender state] == NSOnState)? YES : NO;
+    [[NSUserDefaults userDefaults] setBool:state forKey:MuteDefault];
+    [[NSUserDefaults userDefaults] synchronize];
+}
+
 - (NSWindow *)configureWindow {
     if (!_configureSheet) {
         [NSBundle loadNibNamed:@"Settings" owner:self];
@@ -76,6 +84,11 @@ static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
     NSString *tweetbotBundle = @"com.tapbots.TweetbotMac";
     NSString *tweetBotPath = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:tweetbotBundle];
     _installedTweetbot = (tweetBotPath != nil);
+
+    if ([[NSUserDefaults userDefaults] valueForKey:MuteDefault]) {
+        BOOL muted = [[NSUserDefaults userDefaults] boolForKey:MuteDefault];
+        [_muteCheckBox setState:(muted)? NSOnState : NSOffState];
+    }
 
     [_popupButtonCell selectItemAtIndex:_sizeIndex];
 }
