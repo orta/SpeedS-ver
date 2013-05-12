@@ -8,7 +8,7 @@ This screensaver should work on Mac OS X 10.6 and above. However, it has only be
 Setup
 ----
 
-Download this [zip file]() - unzip - double click the .screensaver. That will install it and open the System Preferences where you can choose the screensaver.
+Download this [zip file](https://raw.github.com/orta/GamesScreenSaver/master/web/GamesScreensaver.saver.zip) - unzip - double click the .screensaver. That will install it and open the System Preferences where you can choose the screensaver.
 
 Screenshots
 ----
