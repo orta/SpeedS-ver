@@ -13,8 +13,8 @@ Download this [zip file](https://raw.github.com/orta/GamesScreenSaver/master/web
 Screenshots
 ----
 
-![https://raw.github.com/orta/GamesScreenSaver/master/web/screenshot.png](https://raw.github.com/orta/GamesScreenSaver/master/web/screenshot.png)
-![https://raw.github.com/orta/GamesScreenSaver/master/web/screenshot.png](https://raw.github.com/orta/GamesScreenSaver/master/web/screenshot.png)
+![https://raw.github.com/orta/GamesScreenSaver/master/web/screenshot.png]()
+![https://raw.github.com/orta/GamesScreenSaver/master/web/settings.png]()
 
 Interesting things
 ----
