@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60756727173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 60756725173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h */; };
+		60756728173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */; };
+		60756729173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */; };
 		60B0D0E517380C14000DA458 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E417380C14000DA458 /* Cocoa.framework */; };
 		60B0D0E717380C14000DA458 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E617380C14000DA458 /* ScreenSaver.framework */; };
 		60B0D0F117380C14000DA458 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60B0D0EF17380C14000DA458 /* InfoPlist.strings */; };
@@ -78,6 +81,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		60756725173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+ScreenSaverDefaults.h"; sourceTree = "<group>"; };
+		60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+ScreenSaverDefaults.m"; sourceTree = "<group>"; };
 		60B0D0E117380C14000DA458 /* GamesScreensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesScreensaver.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B0D0E417380C14000DA458 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60B0D0E617380C14000DA458 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
@@ -170,6 +175,8 @@
 				60E26DE8173EFB2900DF7CED /* ScreenSaverConfig.h */,
 				60E26DE9173EFB2900DF7CED /* ScreenSaverConfig.m */,
 				60E26DE5173EFAEB00DF7CED /* Settings.xib */,
+				60756725173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h */,
+				60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -330,6 +337,7 @@
 				60E26DDC173E5F0300DF7CED /* DDProgressView.h in Headers */,
 				60E26DE1173E953B00DF7CED /* NSString+MD5.h in Headers */,
 				60E26DEA173EFB2A00DF7CED /* ScreenSaverConfig.h in Headers */,
+				60756727173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +463,7 @@
 				60E26DDD173E5F0300DF7CED /* DDProgressView.m in Sources */,
 				60E26DE2173E953B00DF7CED /* NSString+MD5.m in Sources */,
 				60E26DEB173EFB2A00DF7CED /* ScreenSaverConfig.m in Sources */,
+				60756728173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +489,7 @@
 				60E26DDE173E5F0300DF7CED /* DDProgressView.m in Sources */,
 				60E26DE3173E953B00DF7CED /* NSString+MD5.m in Sources */,
 				60E26DEC173EFB2A00DF7CED /* ScreenSaverConfig.m in Sources */,
+				60756729173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

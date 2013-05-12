@@ -11,17 +11,11 @@
 #import <QuickTime/QuickTime.h>
 #import <QTKit/QTKit.h>
 #import "NSFileManager+DirectoryLocations.h"
+#import "NSUserDefaults+ScreenSaverDefaults.h"
 #import "AFDownloadRequestOperation.h"
 #import "DDProgressView.h"
 #import "NSString+MD5.h"
 #import "ScreenSaverConfig.h"
-
-// Switch form using the bootstrapped defaults to the
-// ScreenSaver defaults thing
-
-#if YES
-    #define standardUserDefaults defaultsForModuleWithName:@"Games"
-#endif
 
 static const CGSize ThumbnailSize = { 320.0, 260.0 };
 static const CGSize ProgressSize = { 300.0, 24.0 };
@@ -61,9 +55,9 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
 - (void)startAnimation {
     [super startAnimation];
 
-    NSString *md5Filename = [[NSUserDefaults standardUserDefaults] stringForKey:FileMD5Default];
+    NSString *md5Filename = [[NSUserDefaults userDefaults] stringForKey:FileMD5Default];
     if (md5Filename) {
-        _currentVideoURL = [[NSUserDefaults standardUserDefaults] stringForKey:YoutubeURLDefault];
+        _currentVideoURL = [[NSUserDefaults userDefaults] stringForKey:YoutubeURLDefault];
         _currentVideoPath = [self appSupportPathWithFilename:md5Filename];
     }
 
@@ -79,8 +73,8 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
 
     if (_movieView) {
         NSString *time = QTStringFromTime(_movie.currentTime);
-        [[NSUserDefaults standardUserDefaults] setValue:time forKey:ProgressDefault];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults userDefaults] setValue:time forKey:ProgressDefault];
+        [[NSUserDefaults userDefaults] synchronize];
 
         [_movie stop];
     }
@@ -111,9 +105,9 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
         _currentVideoURL = movie[@"url"];
         _currentVideoPath = [self appSupportPathWithFilename:[videoName MD5Hash]];
 
-        [[NSUserDefaults standardUserDefaults] setObject:videoName forKey:MovieNameDefault];
-        [[NSUserDefaults standardUserDefaults] setObject:[videoName MD5Hash] forKey:FileMD5Default];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults userDefaults] setObject:videoName forKey:MovieNameDefault];
+        [[NSUserDefaults userDefaults] setObject:[videoName MD5Hash] forKey:FileMD5Default];
+        [[NSUserDefaults userDefaults] synchronize];
 
     }
 
@@ -205,7 +199,7 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
         [_movieView play:self];
     }
 
-    NSString *timeString = [[NSUserDefaults standardUserDefaults] stringForKey:ProgressDefault];
+    NSString *timeString = [[NSUserDefaults userDefaults] stringForKey:ProgressDefault];
     if (timeString) {
         [_movie setCurrentTime: QTTimeFromString(timeString)];
     }
@@ -224,11 +218,11 @@ static NSString *MovieNameDefault = @"MovieNameDefault";
     _currentVideoURL = nil;
     _currentVideoPath = nil;
 
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:MovieNameDefault];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:FileMD5Default];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:ProgressDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:MovieNameDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:FileMD5Default];
+    [[NSUserDefaults userDefaults] removeObjectForKey:ProgressDefault];
 
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSUserDefaults userDefaults] synchronize];
     
     [_movieView removeFromSuperview];
     [self getNextVideo];

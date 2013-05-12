@@ -10,9 +10,7 @@
 
 @interface ScreenSaverConfig : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 
-@property (strong) NSArray *appMetadata;
-
 - (NSArray *)availableYoutubeSizes;
-
 - (NSWindow *)configureWindow;
+- (NSArray *)appMetadata;
 @end
