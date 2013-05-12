@@ -1,6 +1,7 @@
-GamesScreenSaver
+A Mac OS X Screensaver - Shows people doing speedruns as your screensaver. 
 ================
 
+<<<<<<< HEAD
 This is an imaginitively titled screensaver that will download and run videos of people completing speed runs of games. I for one don't really have time to play games anymore, but I can sure enjoy watching people who do, do.
 
 This screensaver should work on Mac OS X 10.6 and above. However, it has only been tested with 10.8. It will download a movie then continue playing every time the sceensaver loads until it finishes. There are options for which systems to download movies for, and which qualities to download from youtube.
