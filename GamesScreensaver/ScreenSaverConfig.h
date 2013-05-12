@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GamesScreensaverView.h"
 
 @interface ScreenSaverConfig : NSObject <NSTableViewDataSource, NSTableViewDelegate>
 
+@property (strong) GamesScreensaverView *saver;
 - (NSArray *)availableYoutubeSizes;
 - (NSWindow *)configureWindow;
 - (NSArray *)appMetadata;

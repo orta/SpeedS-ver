@@ -65,6 +65,8 @@ static NSString *MuteDefault = @"MuteDefault";
 
 - (IBAction)muteTapped:(NSButton *)sender {
     BOOL state = ([sender state] == NSOnState)? YES : NO;
+    [_saver setMuted:state];
+
     [[NSUserDefaults userDefaults] setBool:state forKey:MuteDefault];
     [[NSUserDefaults userDefaults] synchronize];
 }
@@ -224,8 +226,7 @@ static NSString *MuteDefault = @"MuteDefault";
 - (IBAction)twitterTapped:(id)sender {
 
     if (_installedTweetbot) {
-        NSTask *task;
-        task = [[NSTask alloc] init];
+        NSTask *task = [[NSTask alloc] init];
         [task setLaunchPath: @"/usr/bin/open"];
         [task setArguments:@[ @"tweetbot://orta/user_profile/orta"]];
         [task launch];

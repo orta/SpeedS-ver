@@ -27,24 +27,22 @@ static NSString *YoutubeURLDefault = @"YoutubeURLDefault";
 static NSString *MovieNameDefault = @"MovieNameDefault";
 static NSString *MuteDefault = @"MuteDefault";
 
-@interface GamesScreensaverView()
-@property (strong) DDProgressView *progressView;
-@property (strong) NSImageView *thumbnailImageView;
-@property (strong) NSString *currentVideoPath;
-@property (strong) NSString *currentVideoURL;
-@property (strong) NSString *currentMovieName;
-@property (strong) NSTextField *infoLabel;
-@property (assign) NSInteger numberOfFailedRequests;
-@end
+static AFDownloadRequestOperation *DownloadRequest;
 
 @implementation GamesScreensaverView {
-    
+    NSString *_currentVideoPath;
+    NSString *_currentVideoURL;
+    NSString *_currentMovieName;
+
+    NSInteger _numberOfFailedRequests;
     BOOL _isPreview;
 
+    DDProgressView *_progressView;
+    NSImageView *_thumbnailImageView;
     QTMovieView *_movieView;
     QTMovie *_movie;
+    NSTextField *_infoLabel;
 
-    AFDownloadRequestOperation *_downloadRequest;
     ScreenSaverConfig *_config;
 }
 
@@ -79,8 +77,8 @@ static NSString *MuteDefault = @"MuteDefault";
 
 - (void)stopAnimation {
     [super stopAnimation];
-    [_downloadRequest cancel];
-
+    [DownloadRequest cancel];
+    
     if (_movieView) {
         NSString *time = QTStringFromTime(_movie.currentTime);
         [[NSUserDefaults userDefaults] setValue:time forKey:ProgressDefault];
@@ -133,47 +131,48 @@ static NSString *MuteDefault = @"MuteDefault";
                 key = potentialKey;
             }
         }
-        
+
         NSString *youtubeMP4URL = videoDictionary[key];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:youtubeMP4URL]];
-        __unsafe_unretained __typeof(self)weakSelf = self;
 
-        _downloadRequest = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:_currentVideoPath shouldResume:YES];
-        [_downloadRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [weakSelf removeProgressIndicator];
-            [weakSelf removeThumbnailImage];
-            [weakSelf playDownloadedFileAtPath:weakSelf.currentVideoPath];
-            
+        DownloadRequest = [[AFDownloadRequestOperation alloc] initWithRequest:request targetPath:_currentVideoPath shouldResume:YES];
+        [DownloadRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self removeProgressIndicator];
+            [self removeThumbnailImage];
+            [self playDownloadedFileAtPath:_currentVideoPath];
+
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            if (weakSelf.numberOfFailedRequests != 5) {
-                [weakSelf getNextVideo];
+            if ([operation isCancelled]) return;
+            
+            if (_numberOfFailedRequests != 5) {
+                [self getNextVideo];
             }
-            weakSelf.numberOfFailedRequests++;
+            _numberOfFailedRequests++;
         }];
 
-        [_downloadRequest setProgressiveDownloadProgressBlock:^(AFDownloadRequestOperation *operation, NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
-            weakSelf.progressView.progress = totalBytesReadForFile / (CGFloat)totalBytesExpectedToReadForFile;
+        [DownloadRequest setProgressiveDownloadProgressBlock:^(AFDownloadRequestOperation *operation, NSInteger bytesRead, long long totalBytesRead, long long totalBytesExpected, long long totalBytesReadForFile, long long totalBytesExpectedToReadForFile) {
+            _progressView.progress = totalBytesReadForFile / (CGFloat)totalBytesExpectedToReadForFile;
 
-            NSString *doneString = [weakSelf humanStringFromBytes:totalBytesReadForFile];
-            NSString *todoString = [weakSelf humanStringFromBytes:totalBytesExpectedToReadForFile];
-            NSString *labelString = [NSString stringWithFormat:@"%@ (%@/%@)", weakSelf.currentMovieName, doneString, todoString];
-            [weakSelf.infoLabel setStringValue:labelString];
+            NSString *doneString = [self humanStringFromBytes:totalBytesReadForFile];
+            NSString *todoString = [self humanStringFromBytes:totalBytesExpectedToReadForFile];
+            NSString *labelString = [NSString stringWithFormat:@"%@ (%@/%@)", _currentMovieName, doneString, todoString];
+            [_infoLabel setStringValue:labelString];
         }];
 
         [self addProgressIndicatorToView];
         [self addMovieLabel];
-        [_downloadRequest start];
+        [DownloadRequest start];
     }];
 }
 
 - (void)addProgressIndicatorToView {
     [self removeProgressIndicator];
-    
+
     CGFloat margin = 16;
     CGRect progressRect = CGRectMake(CGRectGetWidth(self.bounds)/2 - ProgressSize.width/2,
-                          CGRectGetHeight(self.bounds)/2 - ProgressSize.height - ThumbnailSize.height / 2 - margin,
-                          ProgressSize.width, ProgressSize.height);
-    
+                                     CGRectGetHeight(self.bounds)/2 - ProgressSize.height - ThumbnailSize.height / 2 - margin,
+                                     ProgressSize.width, ProgressSize.height);
+
     _progressView = [[DDProgressView alloc] initWithFrame:progressRect];
     [self addSubview:_progressView];
 }
@@ -185,11 +184,11 @@ static NSString *MuteDefault = @"MuteDefault";
 
 - (void)addThumbnailWithImage:(NSImage *)image {
     [self removeThumbnailImage];
-    
+
     CGRect imageRect = CGRectMake(CGRectGetWidth(self.bounds)/2 - ThumbnailSize.width/2,
                                   CGRectGetHeight(self.bounds)/2 - ThumbnailSize.height/2,
                                   ThumbnailSize.width, ThumbnailSize.height);
-    
+
     _thumbnailImageView = [[NSImageView alloc] initWithFrame:imageRect];
     [_thumbnailImageView setImage:image];
     [self addSubview:_thumbnailImageView];
@@ -255,6 +254,11 @@ static NSString *MuteDefault = @"MuteDefault";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:QTMovieDidEndNotification object:_movie];
 }
 
+-(void)setMuted:(BOOL)muted {
+    CGFloat volume = (muted) ? 0 : 1;
+    _movie.volume = volume;
+}
+
 - (void)movieEnded {
     NSError *error = nil;
     [[NSFileManager defaultManager] removeItemAtPath:_currentVideoPath error:&error];
@@ -271,7 +275,7 @@ static NSString *MuteDefault = @"MuteDefault";
     [[NSUserDefaults userDefaults] removeObjectForKey:ProgressDefault];
 
     [[NSUserDefaults userDefaults] synchronize];
-    
+
     [_movieView removeFromSuperview];
     [self getNextVideo];
 }

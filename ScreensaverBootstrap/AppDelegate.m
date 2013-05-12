@@ -25,6 +25,7 @@
 
 - (IBAction)showPopoverWindow:(id)sender {
     if ([_screensaver hasConfigureSheet]) {
+        [_screensaver stopAnimation];
         NSWindow *window = [_screensaver configureSheet];
         [NSApp beginSheet:window modalForWindow:self.window modalDelegate:self didEndSelector:@selector(didEndSheet:returnCode:contextInfo:) contextInfo:nil];
     }
@@ -32,6 +33,7 @@
 
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo {
     [sheet orderOut:self];
+    [_screensaver startAnimation];
 }
 
 @end

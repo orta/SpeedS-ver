@@ -9,5 +9,5 @@
 #import <ScreenSaver/ScreenSaver.h>
 
 @interface GamesScreensaverView : ScreenSaverView
-
+-(void)setMuted:(BOOL)muted;
 @end
