@@ -43,7 +43,6 @@ static AFDownloadRequestOperation *DownloadRequest;
     DDProgressView *_progressView;
     NSImageView *_thumbnailImageView;
     RMVideoView *_streamingMovieView;
-    QTMovie *_movie;
     NSTextField *_infoLabel;
 
     ScreenSaverConfig *_config;
@@ -244,7 +243,6 @@ static AFDownloadRequestOperation *DownloadRequest;
 }
 
 - (void)playURLAtAddress:(NSURL *)url {
-
     [HCYoutubeParser h264videosWithYoutubeURL:url completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
         NSString *key = nil;
         for (NSString *potentialKey in _config.availableYoutubeSizes.reverseObjectEnumerator) {
@@ -265,7 +263,7 @@ static AFDownloadRequestOperation *DownloadRequest;
     
     _streamingMovieView = [[RMVideoView alloc] initWithFrame:CGRectInset(self.bounds, 20, 20)];
     _streamingMovieView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-    _streamingMovieView.autoresizesSubviews = YES; 
+    _streamingMovieView.autoresizesSubviews = YES;
 
     BOOL stream = [[NSUserDefaults userDefaults] boolForKey:StreamDefault];
     if (stream) {
@@ -285,7 +283,7 @@ static AFDownloadRequestOperation *DownloadRequest;
         [_streamingMovieView.player setVolume:0];
     }
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:AVPlayerItemDidPlayToEndTimeNotification object:_movie];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:AVPlayerItemDidPlayToEndTimeNotification object:_streamingMovieView];
 }
 
 - (void)videoViewIsReadyToPlay {
@@ -301,7 +299,7 @@ static AFDownloadRequestOperation *DownloadRequest;
 
 -(void)setMuted:(BOOL)muted {
     CGFloat volume = (muted) ? 0 : 1;
-    _movie.volume = volume;
+    _streamingMovieView.player.volume = volume;
 }
 
 - (void)movieEnded {

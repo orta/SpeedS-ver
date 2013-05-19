@@ -91,6 +91,17 @@
 		60E26DEA173EFB2A00DF7CED /* ScreenSaverConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 60E26DE8173EFB2900DF7CED /* ScreenSaverConfig.h */; };
 		60E26DEB173EFB2A00DF7CED /* ScreenSaverConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E26DE9173EFB2900DF7CED /* ScreenSaverConfig.m */; };
 		60E26DEC173EFB2A00DF7CED /* ScreenSaverConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E26DE9173EFB2900DF7CED /* ScreenSaverConfig.m */; };
+		60FF264D1749396E005F8435 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60FF264C1749396E005F8435 /* ApplicationServices.framework */; };
+		60FF264F1749396E005F8435 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60FF264E1749396E005F8435 /* Foundation.framework */; };
+		60FF26501749396E005F8435 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E26D9B173E454500DF7CED /* QuartzCore.framework */; };
+		60FF26521749396E005F8435 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60FF26511749396E005F8435 /* CoreFoundation.framework */; };
+		60FF26581749396E005F8435 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60FF26561749396E005F8435 /* InfoPlist.strings */; };
+		60FF265B1749396E005F8435 /* CRTModePlugInLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FF265A1749396E005F8435 /* CRTModePlugInLoader.m */; };
+		60FF265E1749396E005F8435 /* CRTModeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FF265D1749396E005F8435 /* CRTModeFilter.m */; };
+		60FF26601749396E005F8435 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 60FF265F1749396E005F8435 /* index.html */; };
+		60FF26621749396E005F8435 /* Description.plist in Resources */ = {isa = PBXBuildFile; fileRef = 60FF26611749396E005F8435 /* Description.plist */; };
+		60FF26651749396E005F8435 /* Description.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60FF26631749396E005F8435 /* Description.strings */; };
+		60FF26671749396E005F8435 /* CRTModeFilterKernel.cikernel in Resources */ = {isa = PBXBuildFile; fileRef = 60FF26661749396E005F8435 /* CRTModeFilterKernel.cikernel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -159,6 +170,21 @@
 		60E26DE5173EFAEB00DF7CED /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		60E26DE8173EFB2900DF7CED /* ScreenSaverConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenSaverConfig.h; sourceTree = "<group>"; };
 		60E26DE9173EFB2900DF7CED /* ScreenSaverConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenSaverConfig.m; sourceTree = "<group>"; };
+		60FF264B1749396E005F8435 /* CRTMode.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRTMode.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		60FF264C1749396E005F8435 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		60FF264E1749396E005F8435 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		60FF26511749396E005F8435 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		60FF26551749396E005F8435 /* CRTMode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CRTMode-Info.plist"; sourceTree = "<group>"; };
+		60FF26571749396E005F8435 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		60FF26591749396E005F8435 /* CRTModePlugInLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRTModePlugInLoader.h; sourceTree = "<group>"; };
+		60FF265A1749396E005F8435 /* CRTModePlugInLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRTModePlugInLoader.m; sourceTree = "<group>"; };
+		60FF265C1749396E005F8435 /* CRTModeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRTModeFilter.h; sourceTree = "<group>"; };
+		60FF265D1749396E005F8435 /* CRTModeFilter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRTModeFilter.m; sourceTree = "<group>"; };
+		60FF265F1749396E005F8435 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		60FF26611749396E005F8435 /* Description.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Description.plist; sourceTree = "<group>"; };
+		60FF26641749396E005F8435 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Description.strings; sourceTree = "<group>"; };
+		60FF26661749396E005F8435 /* CRTModeFilterKernel.cikernel */ = {isa = PBXFileReference; lastKnownFileType = text; path = CRTModeFilterKernel.cikernel; sourceTree = "<group>"; };
+		60FF26681749396E005F8435 /* CRTMode-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CRTMode-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +213,17 @@
 				60E26D96173E31A600DF7CED /* ScreenSaver.framework in Frameworks */,
 				60E26D95173E31A000DF7CED /* QTKit.framework in Frameworks */,
 				60E26D7D173E2F7900DF7CED /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		60FF26461749396E005F8435 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				60FF264D1749396E005F8435 /* ApplicationServices.framework in Frameworks */,
+				60FF264F1749396E005F8435 /* Foundation.framework in Frameworks */,
+				60FF26501749396E005F8435 /* QuartzCore.framework in Frameworks */,
+				60FF26521749396E005F8435 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +258,7 @@
 			children = (
 				60B0D0EC17380C14000DA458 /* GamesScreensaver */,
 				60E26D7E173E2F7900DF7CED /* BootstrapApp */,
+				60FF26531749396E005F8435 /* CRTMode */,
 				60B0D0E317380C14000DA458 /* Frameworks */,
 				60B0D0E217380C14000DA458 /* Products */,
 			);
@@ -231,6 +269,7 @@
 			children = (
 				60B0D0E117380C14000DA458 /* GamesScreensaver.saver */,
 				60E26D7C173E2F7900DF7CED /* ScreensaverBootstrap.app */,
+				60FF264B1749396E005F8435 /* CRTMode.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -245,6 +284,9 @@
 				60B0D0FF1738D0A1000DA458 /* QTKit.framework */,
 				60B0D0E417380C14000DA458 /* Cocoa.framework */,
 				60B0D0E617380C14000DA458 /* ScreenSaver.framework */,
+				60FF264C1749396E005F8435 /* ApplicationServices.framework */,
+				60FF264E1749396E005F8435 /* Foundation.framework */,
+				60FF26511749396E005F8435 /* CoreFoundation.framework */,
 				60B0D0E817380C14000DA458 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -345,6 +387,32 @@
 			name = networking;
 			sourceTree = "<group>";
 		};
+		60FF26531749396E005F8435 /* CRTMode */ = {
+			isa = PBXGroup;
+			children = (
+				60FF26591749396E005F8435 /* CRTModePlugInLoader.h */,
+				60FF265A1749396E005F8435 /* CRTModePlugInLoader.m */,
+				60FF265C1749396E005F8435 /* CRTModeFilter.h */,
+				60FF265D1749396E005F8435 /* CRTModeFilter.m */,
+				60FF265F1749396E005F8435 /* index.html */,
+				60FF26611749396E005F8435 /* Description.plist */,
+				60FF26631749396E005F8435 /* Description.strings */,
+				60FF26661749396E005F8435 /* CRTModeFilterKernel.cikernel */,
+				60FF26541749396E005F8435 /* Supporting Files */,
+			);
+			path = CRTMode;
+			sourceTree = "<group>";
+		};
+		60FF26541749396E005F8435 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				60FF26551749396E005F8435 /* CRTMode-Info.plist */,
+				60FF26561749396E005F8435 /* InfoPlist.strings */,
+				60FF26681749396E005F8435 /* CRTMode-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -370,6 +438,13 @@
 				60E26DEA173EFB2A00DF7CED /* ScreenSaverConfig.h in Headers */,
 				60756727173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h in Headers */,
 				60808AD81742F40D00376502 /* RMVideoView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		60FF26471749396E005F8435 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +487,25 @@
 			productReference = 60E26D7C173E2F7900DF7CED /* ScreensaverBootstrap.app */;
 			productType = "com.apple.product-type.application";
 		};
+		60FF264A1749396E005F8435 /* CRTMode */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 60FF266B1749396E005F8435 /* Build configuration list for PBXNativeTarget "CRTMode" */;
+			buildPhases = (
+				60FF26451749396E005F8435 /* Sources */,
+				60FF26461749396E005F8435 /* Frameworks */,
+				60FF26471749396E005F8435 /* Headers */,
+				60FF26481749396E005F8435 /* Resources */,
+				60FF26491749396E005F8435 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CRTMode;
+			productName = CRTMode;
+			productReference = 60FF264B1749396E005F8435 /* CRTMode.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -435,6 +529,7 @@
 			targets = (
 				60B0D0E017380C14000DA458 /* GamesScreensaver */,
 				60E26D7B173E2F7900DF7CED /* ScreensaverBootstrap */,
+				60FF264A1749396E005F8435 /* CRTMode */,
 			);
 		};
 /* End PBXProject section */
@@ -468,10 +563,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		60FF26481749396E005F8435 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				60FF26581749396E005F8435 /* InfoPlist.strings in Resources */,
+				60FF26601749396E005F8435 /* index.html in Resources */,
+				60FF26621749396E005F8435 /* Description.plist in Resources */,
+				60FF26651749396E005F8435 /* Description.strings in Resources */,
+				60FF26671749396E005F8435 /* CRTModeFilterKernel.cikernel in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
 		60B0D0DF17380C14000DA458 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		60FF26491749396E005F8435 /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -533,6 +647,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		60FF26451749396E005F8435 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				60FF265B1749396E005F8435 /* CRTModePlugInLoader.m in Sources */,
+				60FF265E1749396E005F8435 /* CRTModeFilter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -566,6 +689,22 @@
 				60E26D8E173E2F7900DF7CED /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		60FF26561749396E005F8435 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60FF26571749396E005F8435 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		60FF26631749396E005F8435 /* Description.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60FF26641749396E005F8435 /* en */,
+			);
+			name = Description.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -690,6 +829,36 @@
 			};
 			name = Release;
 		};
+		60FF26691749396E005F8435 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CRTMode/CRTMode-Prefix.pch";
+				INFOPLIST_FILE = "CRTMode/CRTMode-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Image Units";
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		60FF266A1749396E005F8435 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CRTMode/CRTMode-Prefix.pch";
+				INFOPLIST_FILE = "CRTMode/CRTMode-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Graphics/Image Units";
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -719,6 +888,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		60FF266B1749396E005F8435 /* Build configuration list for PBXNativeTarget "CRTMode" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				60FF26691749396E005F8435 /* Debug */,
+				60FF266A1749396E005F8435 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

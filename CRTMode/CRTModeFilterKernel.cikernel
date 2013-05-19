@@ -1,0 +1,17 @@
+float smoothstep(float x)
+{
+    return (x * -2.0 + 3.0) * x * x;
+}
+
+kernel vec4 funHouse(sampler src, float cenx, float invradius, float radius, float scale)
+{
+    float d0;
+    vec2 t1, r1;
+
+    t1 = destCoord();
+    r1.x = (t1.x - cenx) * invradius;
+    d0 = clamp(abs(r1.x), 0.0, 1.0);
+    d0 = smoothstep(1.0 - d0) * (scale - 1.0) + 1.0;
+    t1.x = r1.x * d0 * radius + cenx;
+    return sample(src, samplerTransform(src, t1));
+}
