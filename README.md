@@ -15,6 +15,7 @@ Screenshots
 
 ![Screenshot](https://raw.github.com/orta/GamesScreenSaver/master/web/screenshot.png)
 ![Settings](https://raw.github.com/orta/GamesScreenSaver/master/web/settings.png)
+![Showing](https://raw.github.com/orta/GamesScreenSaver/master/web/inaction.png)
 
 Interesting things
 ----
