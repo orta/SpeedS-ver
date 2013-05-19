@@ -22,10 +22,13 @@ static const CGSize ProgressSize = { 300.0, 20.0 };
 static const CGSize LabelSize = { 300.0, 48.0 };
 
 static NSString *ProgressDefault = @"ProgressDefault";
+static NSString *StreamValueProgressDefault = @"StreamValueProgressDefault";
+
 static NSString *FileMD5Default = @"FileMD5Default";
 static NSString *YoutubeURLDefault = @"YoutubeURLDefault";
 static NSString *MovieNameDefault = @"MovieNameDefault";
 static NSString *MuteDefault = @"MuteDefault";
+static NSString *StreamDefault = @"StreamDefault";
 
 static AFDownloadRequestOperation *DownloadRequest;
 
@@ -40,6 +43,7 @@ static AFDownloadRequestOperation *DownloadRequest;
     DDProgressView *_progressView;
     NSImageView *_thumbnailImageView;
     QTMovieView *_movieView;
+    RMVideoView *_streamingMovieView;
     QTMovie *_movie;
     NSTextField *_infoLabel;
 
@@ -68,10 +72,19 @@ static AFDownloadRequestOperation *DownloadRequest;
         _currentVideoPath = [self appSupportPathWithFilename:md5Filename];
     }
 
-    if ([[NSFileManager defaultManager] fileExistsAtPath:_currentVideoPath]){
-        [self playDownloadedFileAtPath:_currentVideoPath];
+    BOOL stream = [[NSUserDefaults userDefaults] boolForKey:StreamDefault];
+    if (stream) {
+        if (!_currentVideoURL) {
+            [self getNextVideoMetadata];
+        }
+        [self playURLAtAddress:[NSURL URLWithString:_currentVideoURL]];
+
     } else {
-        [self getNextVideo];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:_currentVideoPath]){
+            [self playDownloadedFileAtPath:_currentVideoPath];
+        } else {
+            [self getNextVideo];
+        }
     }
 }
 
@@ -86,6 +99,15 @@ static AFDownloadRequestOperation *DownloadRequest;
 
         [_movie stop];
     }
+
+    if (_streamingMovieView) {
+        CMTime time = _streamingMovieView.player.currentTime;
+        CFDictionaryRef dict = CMTimeCopyAsDictionary(time , kCFAllocatorDefault);
+        NSDictionary *timeDictionary = (__bridge NSDictionary*)dict;
+        [[NSUserDefaults userDefaults] setValue:timeDictionary forKey:StreamValueProgressDefault];
+        [[NSUserDefaults userDefaults] synchronize];
+        [_streamingMovieView.player pause];
+    }
 }
 
 - (void)setupPreview {
@@ -96,27 +118,7 @@ static AFDownloadRequestOperation *DownloadRequest;
 
 - (void)getNextVideo {
     if (!_currentVideoPath || !_currentVideoURL) {
-
-        // If we have both of the above then skip finding
-        // a new one from the JSON.
-
-        NSArray *json = [_config appMetadata];
-        NSInteger categoryIndex = arc4random() % json.count;
-        NSDictionary *category = json[categoryIndex];
-
-        //    NSString *console = category[@"console"];
-        NSArray *movies = category[@"movies"];
-        NSInteger movieIndex = arc4random() % movies.count;
-        NSDictionary *movie = movies[movieIndex];
-
-        _currentMovieName = movie[@"name"];
-        _currentVideoURL = movie[@"url"];
-        _currentVideoPath = [self appSupportPathWithFilename:[_currentMovieName MD5Hash]];
-
-        [[NSUserDefaults userDefaults] setObject:_currentMovieName forKey:MovieNameDefault];
-        [[NSUserDefaults userDefaults] setObject:[_currentMovieName MD5Hash] forKey:FileMD5Default];
-        [[NSUserDefaults userDefaults] synchronize];
-
+        [self getNextVideoMetadata];
     }
 
     NSURL *youtubeURL = [NSURL URLWithString:_currentVideoURL];
@@ -166,6 +168,28 @@ static AFDownloadRequestOperation *DownloadRequest;
             [DownloadRequest start];
         }];
     }
+}
+
+- (void)getNextVideoMetadata {
+    // If we have both of the above then skip finding
+    // a new one from the JSON.
+
+    NSArray *json = [_config appMetadata];
+    NSInteger categoryIndex = arc4random() % json.count;
+    NSDictionary *category = json[categoryIndex];
+
+    NSArray *movies = category[@"movies"];
+    NSInteger movieIndex = arc4random() % movies.count;
+    NSDictionary *movie = movies[movieIndex];
+
+    _currentMovieName = movie[@"name"];
+    _currentVideoURL = movie[@"url"];
+    _currentVideoPath = [self appSupportPathWithFilename:[_currentMovieName MD5Hash]];
+
+    [[NSUserDefaults userDefaults] setObject:_currentMovieName forKey:MovieNameDefault];
+    [[NSUserDefaults userDefaults] setObject:[_currentMovieName MD5Hash] forKey:FileMD5Default];
+    [[NSUserDefaults userDefaults] setObject:_currentVideoURL forKey:YoutubeURLDefault];
+    [[NSUserDefaults userDefaults] synchronize];
 }
 
 - (void)addProgressIndicatorToView {
@@ -223,18 +247,51 @@ static AFDownloadRequestOperation *DownloadRequest;
     _infoLabel = nil;
 }
 
+- (void)playURLAtAddress:(NSURL *)url {
+
+    [HCYoutubeParser h264videosWithYoutubeURL:url completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
+        NSString *key = nil;
+        for (NSString *potentialKey in _config.availableYoutubeSizes.reverseObjectEnumerator) {
+            if(videoDictionary[potentialKey]){
+                key = potentialKey;
+            }
+        }
+
+        NSString *youtubeMP4URL = videoDictionary[key];
+        _streamingMovieView = [[RMVideoView alloc] initWithFrame:CGRectInset(self.bounds, 20, 20)];
+        _streamingMovieView.videoURL = [NSURL URLWithString:youtubeMP4URL];
+        _streamingMovieView.delegate = self;
+        _streamingMovieView.alphaValue = 0;
+
+        [self addSubview:_streamingMovieView];
+        [_streamingMovieView play];
+    }];
+}
+
+- (void)videoViewIsReadyToPlay {
+    NSDictionary *timeDict = [[NSUserDefaults userDefaults] objectForKey:StreamValueProgressDefault];
+
+    if (timeDict) {
+        CFDictionaryRef dict = (__bridge CFDictionaryRef)timeDict;
+        CMTime lastTime = CMTimeMakeFromDictionary(dict);
+        [_streamingMovieView.player seekToTime:lastTime];
+        [_streamingMovieView.animator setAlphaValue:1];
+    }
+}
+
 - (void)playDownloadedFileAtPath:(NSString *)path {
     [_movieView removeFromSuperview];
     [_movie stop];
 
-    _movieView = [[QTMovieView alloc] initWithFrame:self.bounds];
-    [_movieView setControllerVisible:NO];
+    _movieView = [[QTMovieView alloc] initWithFrame:CGRectInset(self.bounds, 20, 20)];
+//    [_movieView setControllerVisible:NO];
     _movieView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     _movieView.autoresizesSubviews = YES;
     _movieView.preservesAspectRatio = YES;
 
     NSError *error = nil;
     _movie = [QTMovie movieWithFile:path error:&error];
+
     if (error) {
         NSLog(@"%@ ", error.localizedDescription);
     }
@@ -278,6 +335,7 @@ static AFDownloadRequestOperation *DownloadRequest;
     [[NSUserDefaults userDefaults] removeObjectForKey:MovieNameDefault];
     [[NSUserDefaults userDefaults] removeObjectForKey:FileMD5Default];
     [[NSUserDefaults userDefaults] removeObjectForKey:ProgressDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:StreamValueProgressDefault];
 
     [[NSUserDefaults userDefaults] synchronize];
 

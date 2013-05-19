@@ -14,14 +14,17 @@ static NSArray *YoutubeSizes;
 static NSString *SizeIndexDefault = @"SizeIndexDefault";
 static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
 static NSString *MuteDefault = @"MuteDefault";
+static NSString *StreamDefault = @"StreamDefault";
 
 @implementation ScreenSaverConfig {
     IBOutlet NSWindow *_configureSheet;
     IBOutlet NSButton *_okButton;
+
     IBOutlet NSPopUpButtonCell *_popupButtonCell;
     IBOutlet NSTableColumn *_titleTableColumn;
     IBOutlet NSButton *_muteCheckBox;
-    
+    IBOutlet NSButton *_streamCheckBox;
+
     IBOutlet NSView *_aboutView;
     IBOutlet NSView *_settingsView;
 
@@ -71,6 +74,12 @@ static NSString *MuteDefault = @"MuteDefault";
     [[NSUserDefaults userDefaults] synchronize];
 }
 
+- (IBAction)streamVideoTapped:(id)sender {
+    BOOL state = ([sender state] == NSOnState)? YES : NO;
+    [[NSUserDefaults userDefaults] setBool:state forKey:StreamDefault];
+    [[NSUserDefaults userDefaults] synchronize];
+}
+
 - (NSWindow *)configureWindow {
     if (!_configureSheet) {
         [NSBundle loadNibNamed:@"Settings" owner:self];
@@ -90,6 +99,11 @@ static NSString *MuteDefault = @"MuteDefault";
     if ([[NSUserDefaults userDefaults] valueForKey:MuteDefault]) {
         BOOL muted = [[NSUserDefaults userDefaults] boolForKey:MuteDefault];
         [_muteCheckBox setState:(muted)? NSOnState : NSOffState];
+    }
+
+    if ([[NSUserDefaults userDefaults] valueForKey:StreamDefault]) {
+        BOOL shouldStream = [[NSUserDefaults userDefaults] boolForKey:StreamDefault];
+        [_streamCheckBox setState:(shouldStream)? NSOnState : NSOffState];
     }
 
     [_popupButtonCell selectItemAtIndex:_sizeIndex];

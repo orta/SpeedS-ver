@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6000EF4A1748C3860094C088 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6000EF491748C3860094C088 /* CoreMedia.framework */; };
+		6000EF4B1748C39A0094C088 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6000EF491748C3860094C088 /* CoreMedia.framework */; };
 		60756727173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 60756725173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h */; };
 		60756728173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */; };
 		60756729173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */; };
@@ -16,6 +18,11 @@
 		60756738173F94A200E0732D /* github_icon_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 60756736173F94A200E0732D /* github_icon_black.png */; };
 		6075673A173F94A700E0732D /* twitter_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 60756739173F94A700E0732D /* twitter_black.png */; };
 		6075673B173F94A700E0732D /* twitter_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 60756739173F94A700E0732D /* twitter_black.png */; };
+		60808AD81742F40D00376502 /* RMVideoView.h in Headers */ = {isa = PBXBuildFile; fileRef = 60808AD61742F40D00376502 /* RMVideoView.h */; };
+		60808AD91742F40D00376502 /* RMVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60808AD71742F40D00376502 /* RMVideoView.m */; };
+		60808ADA1742F40D00376502 /* RMVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60808AD71742F40D00376502 /* RMVideoView.m */; };
+		60808ADC1742F47B00376502 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60808ADB1742F47B00376502 /* AVFoundation.framework */; };
+		60808ADD1742F48A00376502 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60808ADB1742F47B00376502 /* AVFoundation.framework */; };
 		60B0D0E517380C14000DA458 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E417380C14000DA458 /* Cocoa.framework */; };
 		60B0D0E717380C14000DA458 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E617380C14000DA458 /* ScreenSaver.framework */; };
 		60B0D0F117380C14000DA458 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60B0D0EF17380C14000DA458 /* InfoPlist.strings */; };
@@ -87,11 +94,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6000EF491748C3860094C088 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		60756725173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+ScreenSaverDefaults.h"; sourceTree = "<group>"; };
 		60756726173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+ScreenSaverDefaults.m"; sourceTree = "<group>"; };
 		6075672A173F935000E0732D /* orta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orta.png; sourceTree = "<group>"; };
 		60756736173F94A200E0732D /* github_icon_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = github_icon_black.png; sourceTree = "<group>"; };
 		60756739173F94A700E0732D /* twitter_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_black.png; sourceTree = "<group>"; };
+		60808AD61742F40D00376502 /* RMVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVideoView.h; sourceTree = "<group>"; };
+		60808AD71742F40D00376502 /* RMVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVideoView.m; sourceTree = "<group>"; };
+		60808ADB1742F47B00376502 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		60B0D0E117380C14000DA458 /* GamesScreensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesScreensaver.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B0D0E417380C14000DA458 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60B0D0E617380C14000DA458 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
@@ -155,6 +166,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6000EF4B1748C39A0094C088 /* CoreMedia.framework in Frameworks */,
+				60808ADC1742F47B00376502 /* AVFoundation.framework in Frameworks */,
 				60E26D9E173E454B00DF7CED /* Quartz.framework in Frameworks */,
 				60E26D9F173E454B00DF7CED /* QuartzCore.framework in Frameworks */,
 				60B0D1001738D0A1000DA458 /* QTKit.framework in Frameworks */,
@@ -167,6 +180,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6000EF4A1748C3860094C088 /* CoreMedia.framework in Frameworks */,
+				60808ADD1742F48A00376502 /* AVFoundation.framework in Frameworks */,
 				60E26D9C173E454500DF7CED /* Quartz.framework in Frameworks */,
 				60E26D9D173E454500DF7CED /* QuartzCore.framework in Frameworks */,
 				60E26D96173E31A600DF7CED /* ScreenSaver.framework in Frameworks */,
@@ -195,6 +210,8 @@
 			children = (
 				60B0D0F317380C14000DA458 /* GamesScreensaverView.h */,
 				60B0D0F417380C14000DA458 /* GamesScreensaverView.m */,
+				60808AD61742F40D00376502 /* RMVideoView.h */,
+				60808AD71742F40D00376502 /* RMVideoView.m */,
 			);
 			name = Screensaver;
 			sourceTree = "<group>";
@@ -221,6 +238,8 @@
 		60B0D0E317380C14000DA458 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6000EF491748C3860094C088 /* CoreMedia.framework */,
+				60808ADB1742F47B00376502 /* AVFoundation.framework */,
 				60E26D9A173E454500DF7CED /* Quartz.framework */,
 				60E26D9B173E454500DF7CED /* QuartzCore.framework */,
 				60B0D0FF1738D0A1000DA458 /* QTKit.framework */,
@@ -350,6 +369,7 @@
 				60E26DE1173E953B00DF7CED /* NSString+MD5.h in Headers */,
 				60E26DEA173EFB2A00DF7CED /* ScreenSaverConfig.h in Headers */,
 				60756727173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.h in Headers */,
+				60808AD81742F40D00376502 /* RMVideoView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +502,7 @@
 				60E26DE2173E953B00DF7CED /* NSString+MD5.m in Sources */,
 				60E26DEB173EFB2A00DF7CED /* ScreenSaverConfig.m in Sources */,
 				60756728173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */,
+				60808AD91742F40D00376502 /* RMVideoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +529,7 @@
 				60E26DE3173E953B00DF7CED /* NSString+MD5.m in Sources */,
 				60E26DEC173EFB2A00DF7CED /* ScreenSaverConfig.m in Sources */,
 				60756729173F8C3500E0732D /* NSUserDefaults+ScreenSaverDefaults.m in Sources */,
+				60808ADA1742F40D00376502 /* RMVideoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,7 +640,7 @@
 				GCC_PREFIX_HEADER = "GamesScreensaver/GamesScreensaver-Prefix.pch";
 				INFOPLIST_FILE = "GamesScreensaver/GamesScreensaver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = saver;
 			};
@@ -634,7 +656,7 @@
 				GCC_PREFIX_HEADER = "GamesScreensaver/GamesScreensaver-Prefix.pch";
 				INFOPLIST_FILE = "GamesScreensaver/GamesScreensaver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = saver;
 			};

@@ -7,7 +7,8 @@
 //
 
 #import <ScreenSaver/ScreenSaver.h>
+#import "RMVideoView.h"
 
-@interface GamesScreensaverView : ScreenSaverView
+@interface GamesScreensaverView : ScreenSaverView <RMVideoViewDelegate>
 -(void)setMuted:(BOOL)muted;
 @end
