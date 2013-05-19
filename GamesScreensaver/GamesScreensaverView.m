@@ -81,7 +81,7 @@ static AFDownloadRequestOperation *DownloadRequest;
 
     } else {
         if ([[NSFileManager defaultManager] fileExistsAtPath:_currentVideoPath]){
-            [self playDownloadedFileAtPath:_currentVideoPath];
+            [self createMovieViewForFilePathorURL:_currentVideoPath];
         } else {
             [self getNextVideo];
         }
@@ -143,7 +143,7 @@ static AFDownloadRequestOperation *DownloadRequest;
             [DownloadRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [self removeProgressIndicator];
                 [self removeThumbnailImage];
-                [self playDownloadedFileAtPath:_currentVideoPath];
+                [self createMovieViewForFilePathorURL:_currentVideoPath];
 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 if ([operation isCancelled]) return;
@@ -258,14 +258,39 @@ static AFDownloadRequestOperation *DownloadRequest;
         }
 
         NSString *youtubeMP4URL = videoDictionary[key];
-        _streamingMovieView = [[RMVideoView alloc] initWithFrame:CGRectInset(self.bounds, 20, 20)];
-        _streamingMovieView.videoURL = [NSURL URLWithString:youtubeMP4URL];
-        _streamingMovieView.delegate = self;
-        _streamingMovieView.alphaValue = 0;
-
-        [self addSubview:_streamingMovieView];
-        [_streamingMovieView play];
+        [self createMovieViewForFilePathorURL:youtubeMP4URL];
     }];
+}
+
+- (void)createMovieViewForFilePathorURL:(id)fileOrURL {
+    [_streamingMovieView.player pause];
+    [_streamingMovieView removeFromSuperview];
+    _streamingMovieView = nil;
+    
+    _streamingMovieView = [[RMVideoView alloc] initWithFrame:CGRectInset(self.bounds, 20, 20)];
+    _streamingMovieView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    _streamingMovieView.autoresizesSubviews = YES; 
+
+    BOOL stream = [[NSUserDefaults userDefaults] boolForKey:StreamDefault];
+    if (stream) {
+        _streamingMovieView.videoURL = fileOrURL;
+    } else {
+        _streamingMovieView.videoPath = fileOrURL;
+    }
+    _streamingMovieView.delegate = self;
+
+    [self addSubview:_streamingMovieView];
+    if (!_isPreview) {
+        [_streamingMovieView play];
+    }
+
+    BOOL muted = [[NSUserDefaults userDefaults] boolForKey:MuteDefault];
+    if (muted) {
+        [_streamingMovieView.player setVolume:0];
+    }
+
+#warning  TODO
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:QTMovieDidEndNotification object:_movie];
 }
 
 - (void)videoViewIsReadyToPlay {
@@ -277,43 +302,6 @@ static AFDownloadRequestOperation *DownloadRequest;
         [_streamingMovieView.player seekToTime:lastTime];
         [_streamingMovieView.animator setAlphaValue:1];
     }
-}
-
-- (void)playDownloadedFileAtPath:(NSString *)path {
-    [_movieView removeFromSuperview];
-    [_movie stop];
-
-    _movieView = [[QTMovieView alloc] initWithFrame:CGRectInset(self.bounds, 20, 20)];
-//    [_movieView setControllerVisible:NO];
-    _movieView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-    _movieView.autoresizesSubviews = YES;
-    _movieView.preservesAspectRatio = YES;
-
-    NSError *error = nil;
-    _movie = [QTMovie movieWithFile:path error:&error];
-
-    if (error) {
-        NSLog(@"%@ ", error.localizedDescription);
-    }
-    [_movieView setMovie:_movie];
-
-    [self addSubview:_movieView];
-
-    if (!_isPreview) {
-        [_movieView play:self];
-    }
-
-    BOOL muted = [[NSUserDefaults userDefaults] boolForKey:MuteDefault];
-    if (muted) {
-        [_movie setVolume:0];
-    }
-
-    NSString *timeString = [[NSUserDefaults userDefaults] stringForKey:ProgressDefault];
-    if (timeString) {
-        [_movie setCurrentTime: QTTimeFromString(timeString)];
-    }
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:QTMovieDidEndNotification object:_movie];
 }
 
 -(void)setMuted:(BOOL)muted {

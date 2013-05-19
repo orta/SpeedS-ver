@@ -18,7 +18,9 @@
 @property (weak) id <RMVideoViewDelegate> delegate;
 @property (nonatomic, readonly, strong) AVPlayer *player;
 @property (nonatomic, readonly, strong) AVPlayerLayer *playerLayer;
+
 @property (nonatomic, retain) NSURL *videoURL;
+@property (nonatomic, retain) NSString *videoPath;
 
 - (void) play;
 

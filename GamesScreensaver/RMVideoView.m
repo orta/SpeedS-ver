@@ -38,6 +38,11 @@ static void *RMVideoViewPlayerItemStatusContext = &RMVideoViewPlayerItemStatusCo
     [self removeObserver:self forKeyPath:@"playerLayer.readyForDisplay"];
 }
 
+- (void) setVideoPath:(NSString *)videoPath {
+    NSURL *url = [NSURL fileURLWithPath:videoPath];
+    [self setVideoURL:url];
+}
+
 - (void) setVideoURL:(NSURL *)videoURL {
     _videoURL = videoURL;
 
@@ -106,6 +111,8 @@ static void *RMVideoViewPlayerItemStatusContext = &RMVideoViewPlayerItemStatusCo
         self.playerLayer.frame = self.layer.bounds;
         self.playerLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         self.playerLayer.hidden = YES;
+        self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+
         [self.layer addSublayer:self.playerLayer];
         [self addObserver:self forKeyPath:@"playerLayer.readyForDisplay" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:RMVideoViewPlayerLayerReadyForDisplay];
     }

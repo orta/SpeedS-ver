@@ -77,6 +77,10 @@ static NSString *StreamDefault = @"StreamDefault";
 - (IBAction)streamVideoTapped:(id)sender {
     BOOL state = ([sender state] == NSOnState)? YES : NO;
     [[NSUserDefaults userDefaults] setBool:state forKey:StreamDefault];
+
+    [[NSUserDefaults userDefaults] removeObjectForKey:@"MovieNameDefault"];
+    [[NSUserDefaults userDefaults] removeObjectForKey:@"FileMD5Default"];
+    [[NSUserDefaults userDefaults] removeObjectForKey:@"StreamValueProgressDefault"];
     [[NSUserDefaults userDefaults] synchronize];
 }
 
