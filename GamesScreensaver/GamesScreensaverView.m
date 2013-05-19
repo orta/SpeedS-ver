@@ -150,8 +150,13 @@ static AFDownloadRequestOperation *DownloadRequest;
 
                 NSString *doneString = [self humanStringFromBytes:totalBytesReadForFile];
                 NSString *todoString = [self humanStringFromBytes:totalBytesExpectedToReadForFile];
-                NSString *labelString = [NSString stringWithFormat:@"%@ (%@/%@)", _currentMovieName, doneString, todoString];
-                [_infoLabel setStringValue:labelString];
+                if(_currentMovieName){
+                    NSString *labelString = [NSString stringWithFormat:@"%@ (%@/%@)", _currentMovieName, doneString, todoString];
+                    [_infoLabel setStringValue:labelString];
+                } else {
+                    NSString *labelString = [NSString stringWithFormat:@"(%@/%@)", doneString, todoString];
+                    [_infoLabel setStringValue:labelString];
+                }
             }];
 
             [self addProgressIndicatorToView];
