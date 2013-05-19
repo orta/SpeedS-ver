@@ -49,7 +49,7 @@ static void *RMVideoViewPlayerItemStatusContext = &RMVideoViewPlayerItemStatusCo
     [self.player pause];
     [self.playerLayer removeFromSuperlayer];
 
-    AVURLAsset *asset = [AVAsset assetWithURL:self.videoURL];
+    AVURLAsset *asset = [AVAsset assetWithURL:_videoURL];
     NSArray *assetKeysToLoadAndTest = [NSArray arrayWithObjects:@"playable", @"hasProtectedContent", @"tracks", @"duration", nil];
     [asset loadValuesAsynchronouslyForKeys:assetKeysToLoadAndTest completionHandler:^(void) {
         dispatch_async(dispatch_get_main_queue(), ^(void) {

@@ -42,7 +42,6 @@ static AFDownloadRequestOperation *DownloadRequest;
 
     DDProgressView *_progressView;
     NSImageView *_thumbnailImageView;
-    QTMovieView *_movieView;
     RMVideoView *_streamingMovieView;
     QTMovie *_movie;
     NSTextField *_infoLabel;
@@ -91,14 +90,6 @@ static AFDownloadRequestOperation *DownloadRequest;
 - (void)stopAnimation {
     [super stopAnimation];
     [DownloadRequest cancel];
-    
-    if (_movieView) {
-        NSString *time = QTStringFromTime(_movie.currentTime);
-        [[NSUserDefaults userDefaults] setValue:time forKey:ProgressDefault];
-        [[NSUserDefaults userDefaults] synchronize];
-
-        [_movie stop];
-    }
 
     if (_streamingMovieView) {
         CMTime time = _streamingMovieView.player.currentTime;
@@ -257,7 +248,7 @@ static AFDownloadRequestOperation *DownloadRequest;
             }
         }
 
-        NSString *youtubeMP4URL = videoDictionary[key];
+        NSURL *youtubeMP4URL = [NSURL URLWithString:videoDictionary[key]];
         [self createMovieViewForFilePathorURL:youtubeMP4URL];
     }];
 }
@@ -289,8 +280,7 @@ static AFDownloadRequestOperation *DownloadRequest;
         [_streamingMovieView.player setVolume:0];
     }
 
-#warning  TODO
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:QTMovieDidEndNotification object:_movie];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:AVPlayerItemDidPlayToEndTimeNotification object:_movie];
 }
 
 - (void)videoViewIsReadyToPlay {
@@ -327,7 +317,7 @@ static AFDownloadRequestOperation *DownloadRequest;
 
     [[NSUserDefaults userDefaults] synchronize];
 
-    [_movieView removeFromSuperview];
+    [_streamingMovieView removeFromSuperview];
     [self getNextVideo];
 }
 
