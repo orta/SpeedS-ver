@@ -1,5 +1,5 @@
 A Mac OS X Screensaver - Shows people doing speedruns as your screensaver. 
-================
+---
 
 This is an imaginitively titled screensaver that will download and run videos of people completing speed runs of games. I for one don't really have time to play games anymore, but I can sure enjoy watching people who do, do.
 
