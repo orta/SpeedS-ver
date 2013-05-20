@@ -133,6 +133,10 @@ static AFDownloadRequestOperation *DownloadRequest;
             [DownloadRequest setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [self removeProgressIndicator];
                 [self removeThumbnailImage];
+
+                [[NSUserDefaults userDefaults] removeObjectForKey:StreamValueProgressDefault];
+                [[NSUserDefaults userDefaults] synchronize];
+                
                 [self createMovieViewForFilePathorURL:_currentVideoPath];
 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -158,6 +162,7 @@ static AFDownloadRequestOperation *DownloadRequest;
                 }
             }];
 
+            [self removeMovieView];
             [self addProgressIndicatorToView];
             [self addMovieLabel];
             [DownloadRequest start];
@@ -256,11 +261,15 @@ static AFDownloadRequestOperation *DownloadRequest;
     }];
 }
 
-- (void)createMovieViewForFilePathorURL:(id)fileOrURL {
+- (void)removeMovieView {
     [_streamingMovieView.player pause];
     [_streamingMovieView removeFromSuperview];
     _streamingMovieView = nil;
-    
+}
+
+- (void)createMovieViewForFilePathorURL:(id)fileOrURL {
+    [self removeMovieView];
+
     _streamingMovieView = [[RMVideoView alloc] initWithFrame:CGRectInset(self.bounds, 20, 20)];
     _streamingMovieView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     _streamingMovieView.autoresizesSubviews = YES;
