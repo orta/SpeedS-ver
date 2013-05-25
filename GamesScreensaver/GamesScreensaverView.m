@@ -292,7 +292,16 @@ static AFDownloadRequestOperation *DownloadRequest;
         [_streamingMovieView.player setVolume:0];
     }
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:AVPlayerItemDidPlayToEndTimeNotification object:_streamingMovieView];
+    __block AVPlayer *weakPlayer = _streamingMovieView.player;
+    __block GamesScreensaverView *weakSelf = self;
+	[_streamingMovieView.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 10) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+        if (CMTimeGetSeconds(time) >= CMTimeGetSeconds(weakPlayer.currentItem.duration)) {
+            [weakSelf movieEnded];
+        }
+	}];
+
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieEnded) name:AVPlayerItemDidPlayToEndTimeNotification object:_streamingMovieView.player];
 }
 
 - (void)videoViewIsReadyToPlay {
@@ -301,8 +310,13 @@ static AFDownloadRequestOperation *DownloadRequest;
     if (timeDict) {
         CFDictionaryRef dict = (__bridge CFDictionaryRef)timeDict;
         CMTime lastTime = CMTimeMakeFromDictionary(dict);
-        [_streamingMovieView.player seekToTime:lastTime];
-        [_streamingMovieView.animator setAlphaValue:1];
+        if (CMTimeGetSeconds(lastTime) < CMTimeGetSeconds(_streamingMovieView.player.currentItem.duration)) {
+            [_streamingMovieView.player seekToTime:lastTime];
+            [_streamingMovieView.animator setAlphaValue:1];
+
+        } else {
+            [self movieEnded];
+        }
     }
 }
 
@@ -328,6 +342,7 @@ static AFDownloadRequestOperation *DownloadRequest;
     [[NSUserDefaults userDefaults] removeObjectForKey:StreamValueProgressDefault];
 
     [[NSUserDefaults userDefaults] synchronize];
+    [self emptyAppSupportDir];
 
     [_streamingMovieView removeFromSuperview];
     [self getNextVideo];
@@ -337,6 +352,23 @@ static AFDownloadRequestOperation *DownloadRequest;
     NSString *filePath = [[NSFileManager defaultManager] applicationSupportDirectory];
     NSString *fileWithExtention = [NSString stringWithFormat:@"%@.mp4", filename];
     return [filePath stringByAppendingPathComponent:fileWithExtention];
+}
+
+- (void)emptyAppSupportDir {
+    NSString *folderPath = [[NSFileManager defaultManager] applicationSupportDirectory];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtPath:folderPath];
+    NSString *fileName = nil;
+    NSError *error = nil;
+    while (fileName = [enumerator nextObject]) {
+
+        NSString *filePath = [folderPath stringByAppendingPathComponent:fileName];
+
+        if (![fileManager removeItemAtPath:filePath error:&error]) {
+            NSLog(@"Error removing file %@ : %@", fileName, error);
+        }
+    }
 }
 
 - (void)animateOneFrame {
@@ -372,6 +404,5 @@ static AFDownloadRequestOperation *DownloadRequest;
     // Beware of reusing this format string. -[NSString stringWithFormat] ignores \0, *printf does not.
     return [NSString stringWithFormat:@"%@ %cB", [formatter stringFromNumber: @(bytes)], units[exponent]];
 }
-
 
 @end

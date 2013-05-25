@@ -114,15 +114,15 @@
 		60808AD61742F40D00376502 /* RMVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVideoView.h; sourceTree = "<group>"; };
 		60808AD71742F40D00376502 /* RMVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVideoView.m; sourceTree = "<group>"; };
 		60808ADB1742F47B00376502 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		60B0D0E117380C14000DA458 /* GamesScreensaver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamesScreensaver.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		60B0D0E117380C14000DA458 /* SpeedS@ver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpeedS@ver.saver"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B0D0E417380C14000DA458 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60B0D0E617380C14000DA458 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
 		60B0D0E917380C14000DA458 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		60B0D0EA17380C14000DA458 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		60B0D0EB17380C14000DA458 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		60B0D0EE17380C14000DA458 /* GamesScreensaver-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GamesScreensaver-Info.plist"; sourceTree = "<group>"; };
+		60B0D0EE17380C14000DA458 /* SpeedS@ver-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpeedS@ver-Info.plist"; sourceTree = "<group>"; };
 		60B0D0F017380C14000DA458 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		60B0D0F217380C14000DA458 /* GamesScreensaver-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GamesScreensaver-Prefix.pch"; sourceTree = "<group>"; };
+		60B0D0F217380C14000DA458 /* SpeedS@ver-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpeedS@ver-Prefix.pch"; sourceTree = "<group>"; };
 		60B0D0F317380C14000DA458 /* GamesScreensaverView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GamesScreensaverView.h; sourceTree = "<group>"; };
 		60B0D0F417380C14000DA458 /* GamesScreensaverView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GamesScreensaverView.m; sourceTree = "<group>"; };
 		60B0D0FB17380CE1000DA458 /* HCYoutubeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCYoutubeParser.h; sourceTree = "<group>"; };
@@ -267,7 +267,7 @@
 		60B0D0E217380C14000DA458 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				60B0D0E117380C14000DA458 /* GamesScreensaver.saver */,
+				60B0D0E117380C14000DA458 /* SpeedS@ver.saver */,
 				60E26D7C173E2F7900DF7CED /* ScreensaverBootstrap.app */,
 				60FF264B1749396E005F8435 /* CRTMode.plugin */,
 			);
@@ -330,9 +330,9 @@
 				60E26D97173E415700DF7CED /* metadata.json */,
 				60B0D0FB17380CE1000DA458 /* HCYoutubeParser.h */,
 				60B0D0FC17380CE1000DA458 /* HCYoutubeParser.m */,
-				60B0D0EE17380C14000DA458 /* GamesScreensaver-Info.plist */,
+				60B0D0EE17380C14000DA458 /* SpeedS@ver-Info.plist */,
 				60B0D0EF17380C14000DA458 /* InfoPlist.strings */,
-				60B0D0F217380C14000DA458 /* GamesScreensaver-Prefix.pch */,
+				60B0D0F217380C14000DA458 /* SpeedS@ver-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -451,9 +451,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		60B0D0E017380C14000DA458 /* GamesScreensaver */ = {
+		60B0D0E017380C14000DA458 /* SpeedS@ver */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 60B0D0F817380C14000DA458 /* Build configuration list for PBXNativeTarget "GamesScreensaver" */;
+			buildConfigurationList = 60B0D0F817380C14000DA458 /* Build configuration list for PBXNativeTarget "SpeedS@ver" */;
 			buildPhases = (
 				60B0D0DB17380C14000DA458 /* Sources */,
 				60B0D0DC17380C14000DA458 /* Frameworks */,
@@ -465,9 +465,9 @@
 			);
 			dependencies = (
 			);
-			name = GamesScreensaver;
+			name = "SpeedS@ver";
 			productName = GamesScreensaver;
-			productReference = 60B0D0E117380C14000DA458 /* GamesScreensaver.saver */;
+			productReference = 60B0D0E117380C14000DA458 /* SpeedS@ver.saver */;
 			productType = "com.apple.product-type.bundle";
 		};
 		60E26D7B173E2F7900DF7CED /* ScreensaverBootstrap */ = {
@@ -515,7 +515,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Orta;
 			};
-			buildConfigurationList = 60B0D0DA17380C14000DA458 /* Build configuration list for PBXProject "GamesScreensaver" */;
+			buildConfigurationList = 60B0D0DA17380C14000DA458 /* Build configuration list for PBXProject "SpeedS@ver" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -527,7 +527,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				60B0D0E017380C14000DA458 /* GamesScreensaver */,
+				60B0D0E017380C14000DA458 /* SpeedS@ver */,
 				60E26D7B173E2F7900DF7CED /* ScreensaverBootstrap */,
 				60FF264A1749396E005F8435 /* CRTMode */,
 			);
@@ -776,11 +776,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ENABLE_OBJC_GC = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GamesScreensaver/GamesScreensaver-Prefix.pch";
-				INFOPLIST_FILE = "GamesScreensaver/GamesScreensaver-Info.plist";
+				GCC_PREFIX_HEADER = "GamesScreensaver/SpeedS@ver-Prefix.pch";
+				INFOPLIST_FILE = "GamesScreensaver/SpeedS@ver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "SpeedS@ver";
 				WRAPPER_EXTENSION = saver;
 			};
 			name = Debug;
@@ -792,11 +792,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ENABLE_OBJC_GC = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "GamesScreensaver/GamesScreensaver-Prefix.pch";
-				INFOPLIST_FILE = "GamesScreensaver/GamesScreensaver-Info.plist";
+				GCC_PREFIX_HEADER = "GamesScreensaver/SpeedS@ver-Prefix.pch";
+				INFOPLIST_FILE = "GamesScreensaver/SpeedS@ver-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "SpeedS@ver";
 				WRAPPER_EXTENSION = saver;
 			};
 			name = Release;
@@ -862,7 +862,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		60B0D0DA17380C14000DA458 /* Build configuration list for PBXProject "GamesScreensaver" */ = {
+		60B0D0DA17380C14000DA458 /* Build configuration list for PBXProject "SpeedS@ver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				60B0D0F617380C14000DA458 /* Debug */,
@@ -871,7 +871,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		60B0D0F817380C14000DA458 /* Build configuration list for PBXNativeTarget "GamesScreensaver" */ = {
+		60B0D0F817380C14000DA458 /* Build configuration list for PBXNativeTarget "SpeedS@ver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				60B0D0F917380C14000DA458 /* Debug */,
@@ -896,6 +896,7 @@
 				60FF266A1749396E005F8435 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
