@@ -21,14 +21,14 @@ static const CGSize ThumbnailSize = { 320.0, 260.0 };
 static const CGSize ProgressSize = { 300.0, 20.0 };
 static const CGSize LabelSize = { 300.0, 48.0 };
 
-static NSString *ProgressDefault = @"ProgressDefault";
-static NSString *StreamValueProgressDefault = @"StreamValueProgressDefault";
+ NSString *ProgressDefault = @"ProgressDefault";
+ NSString *StreamValueProgressDefault = @"StreamValueProgressDefault";
 
-static NSString *FileMD5Default = @"FileMD5Default";
-static NSString *YoutubeURLDefault = @"YoutubeURLDefault";
-static NSString *MovieNameDefault = @"MovieNameDefault";
-static NSString *MuteDefault = @"MuteDefault";
-static NSString *StreamDefault = @"StreamDefault";
+ NSString *FileMD5Default = @"FileMD5Default";
+ NSString *YoutubeURLDefault = @"YoutubeURLDefault";
+ NSString *MovieNameDefault = @"MovieNameDefault";
+ NSString *MuteDefault = @"MuteDefault";
+ NSString *StreamDefault = @"StreamDefault";
 
 static AFDownloadRequestOperation *DownloadRequest;
 
@@ -68,19 +68,27 @@ static AFDownloadRequestOperation *DownloadRequest;
     if (md5Filename) {
         _currentVideoURL = [[NSUserDefaults userDefaults] stringForKey:YoutubeURLDefault];
         _currentVideoPath = [self appSupportPathWithFilename:md5Filename];
+    } else {
+        _currentVideoURL = nil;
+        _currentVideoPath = nil;
     }
 
     BOOL stream = [[NSUserDefaults userDefaults] boolForKey:StreamDefault];
     if (stream) {
+        NSLog(@"Is Streaming");
         if (!_currentVideoURL) {
+            NSLog(@"Getting new video");
             [self getNextVideoMetadata];
         }
         [self playURLAtAddress:[NSURL URLWithString:_currentVideoURL]];
 
     } else {
+        NSLog(@"Is Local");
+
         if ([[NSFileManager defaultManager] fileExistsAtPath:_currentVideoPath]){
             [self createMovieViewForFilePathorURL:_currentVideoPath];
         } else {
+            NSLog(@"Getting new video");
             [self getNextVideo];
         }
     }
@@ -336,10 +344,11 @@ static AFDownloadRequestOperation *DownloadRequest;
     _currentVideoURL = nil;
     _currentVideoPath = nil;
 
-    [[NSUserDefaults userDefaults] removeObjectForKey:MovieNameDefault];
-    [[NSUserDefaults userDefaults] removeObjectForKey:FileMD5Default];
     [[NSUserDefaults userDefaults] removeObjectForKey:ProgressDefault];
     [[NSUserDefaults userDefaults] removeObjectForKey:StreamValueProgressDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:MovieNameDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:FileMD5Default];
+    [[NSUserDefaults userDefaults] removeObjectForKey:YoutubeURLDefault];
 
     [[NSUserDefaults userDefaults] synchronize];
     [self emptyAppSupportDir];

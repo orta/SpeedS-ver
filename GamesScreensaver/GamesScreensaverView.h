@@ -9,6 +9,15 @@
 #import <ScreenSaver/ScreenSaver.h>
 #import "RMVideoView.h"
 
+extern  NSString *ProgressDefault;
+extern  NSString *StreamValueProgressDefault;
+extern  NSString *FileMD5Default;
+extern  NSString *YoutubeURLDefault;
+extern  NSString *MovieNameDefault;
+extern  NSString *MuteDefault;
+extern  NSString *StreamDefault;
+
 @interface GamesScreensaverView : ScreenSaverView <RMVideoViewDelegate>
--(void)setMuted:(BOOL)muted;
+- (void)setMuted:(BOOL)muted;
+- (void)reset;
 @end

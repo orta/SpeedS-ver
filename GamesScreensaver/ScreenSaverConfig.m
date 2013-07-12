@@ -9,12 +9,11 @@
 #import "ScreenSaverConfig.h"
 #import "NSUserDefaults+ScreenSaverDefaults.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GamesScreensaverView.h"
 
 static NSArray *YoutubeSizes;
 static NSString *SizeIndexDefault = @"SizeIndexDefault";
 static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
-static NSString *MuteDefault = @"MuteDefault";
-static NSString *StreamDefault = @"StreamDefault";
 
 @implementation ScreenSaverConfig {
     IBOutlet NSWindow *_configureSheet;
@@ -72,6 +71,17 @@ static NSString *StreamDefault = @"StreamDefault";
 
     [[NSUserDefaults userDefaults] setBool:state forKey:MuteDefault];
     [[NSUserDefaults userDefaults] synchronize];
+}
+
+- (IBAction)skipClicked:(id)sender {
+
+    [[NSUserDefaults userDefaults] removeObjectForKey:ProgressDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:StreamValueProgressDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:MovieNameDefault];
+    [[NSUserDefaults userDefaults] removeObjectForKey:FileMD5Default];
+    [[NSUserDefaults userDefaults] removeObjectForKey:YoutubeURLDefault];
+    [[NSUserDefaults userDefaults] synchronize];
+    [_saver reset];
 }
 
 - (IBAction)streamVideoTapped:(id)sender {
