@@ -74,14 +74,12 @@ static NSString *AvailabilitiesDefault = @"AvailabilitiesDefault";
 }
 
 - (IBAction)skipClicked:(id)sender {
-
     [[NSUserDefaults userDefaults] removeObjectForKey:ProgressDefault];
     [[NSUserDefaults userDefaults] removeObjectForKey:StreamValueProgressDefault];
     [[NSUserDefaults userDefaults] removeObjectForKey:MovieNameDefault];
     [[NSUserDefaults userDefaults] removeObjectForKey:FileMD5Default];
     [[NSUserDefaults userDefaults] removeObjectForKey:YoutubeURLDefault];
     [[NSUserDefaults userDefaults] synchronize];
-    [_saver reset];
 }
 
 - (IBAction)streamVideoTapped:(id)sender {

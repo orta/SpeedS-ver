@@ -16,6 +16,7 @@
 #import "DDProgressView.h"
 #import "NSString+MD5.h"
 #import "ScreenSaverConfig.h"
+#import "CRTCoreImageFilterGenerator.h"
 
 static const CGSize ThumbnailSize = { 320.0, 260.0 };
 static const CGSize ProgressSize = { 300.0, 20.0 };
@@ -54,6 +55,7 @@ static AFDownloadRequestOperation *DownloadRequest;
     if (self) {
         [self setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
         [self setAutoresizesSubviews:YES];
+
         _isPreview = isPreview;
         _config = [[ScreenSaverConfig alloc] init];
     }

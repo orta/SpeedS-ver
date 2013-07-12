@@ -23,6 +23,9 @@
 		60808ADA1742F40D00376502 /* RMVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60808AD71742F40D00376502 /* RMVideoView.m */; };
 		60808ADC1742F47B00376502 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60808ADB1742F47B00376502 /* AVFoundation.framework */; };
 		60808ADD1742F48A00376502 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60808ADB1742F47B00376502 /* AVFoundation.framework */; };
+		6099F90D1790B8470004EF04 /* CRTCoreImageFilterGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 6099F90B1790B8470004EF04 /* CRTCoreImageFilterGenerator.h */; };
+		6099F90E1790B8470004EF04 /* CRTCoreImageFilterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6099F90C1790B8470004EF04 /* CRTCoreImageFilterGenerator.m */; };
+		6099F90F1790B8470004EF04 /* CRTCoreImageFilterGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6099F90C1790B8470004EF04 /* CRTCoreImageFilterGenerator.m */; };
 		60B0D0E517380C14000DA458 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E417380C14000DA458 /* Cocoa.framework */; };
 		60B0D0E717380C14000DA458 /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B0D0E617380C14000DA458 /* ScreenSaver.framework */; };
 		60B0D0F117380C14000DA458 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 60B0D0EF17380C14000DA458 /* InfoPlist.strings */; };
@@ -114,6 +117,8 @@
 		60808AD61742F40D00376502 /* RMVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVideoView.h; sourceTree = "<group>"; };
 		60808AD71742F40D00376502 /* RMVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVideoView.m; sourceTree = "<group>"; };
 		60808ADB1742F47B00376502 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		6099F90B1790B8470004EF04 /* CRTCoreImageFilterGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTCoreImageFilterGenerator.h; sourceTree = "<group>"; };
+		6099F90C1790B8470004EF04 /* CRTCoreImageFilterGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTCoreImageFilterGenerator.m; sourceTree = "<group>"; };
 		60B0D0E117380C14000DA458 /* SpeedS@ver.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpeedS@ver.saver"; sourceTree = BUILT_PRODUCTS_DIR; };
 		60B0D0E417380C14000DA458 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		60B0D0E617380C14000DA458 /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
@@ -249,6 +254,8 @@
 				60B0D0F417380C14000DA458 /* GamesScreensaverView.m */,
 				60808AD61742F40D00376502 /* RMVideoView.h */,
 				60808AD71742F40D00376502 /* RMVideoView.m */,
+				6099F90B1790B8470004EF04 /* CRTCoreImageFilterGenerator.h */,
+				6099F90C1790B8470004EF04 /* CRTCoreImageFilterGenerator.m */,
 			);
 			name = Screensaver;
 			sourceTree = "<group>";
@@ -429,6 +436,7 @@
 				60E26DC3173E5BF900DF7CED /* AFNetworkActivityIndicatorManager.h in Headers */,
 				60E26DC6173E5BF900DF7CED /* AFNetworking.h in Headers */,
 				60E26DC7173E5BF900DF7CED /* AFPropertyListRequestOperation.h in Headers */,
+				6099F90D1790B8470004EF04 /* CRTCoreImageFilterGenerator.h in Headers */,
 				60E26DCA173E5BF900DF7CED /* AFURLConnectionOperation.h in Headers */,
 				60E26DCD173E5BF900DF7CED /* AFXMLRequestOperation.h in Headers */,
 				60E26DD2173E5C1A00DF7CED /* AFDownloadRequestOperation.h in Headers */,
@@ -612,6 +620,7 @@
 				60E26DCE173E5BF900DF7CED /* AFXMLRequestOperation.m in Sources */,
 				60E26DD3173E5C1A00DF7CED /* AFDownloadRequestOperation.m in Sources */,
 				60E26DD8173E5EE000DF7CED /* AppKitCompatibility.m in Sources */,
+				6099F90E1790B8470004EF04 /* CRTCoreImageFilterGenerator.m in Sources */,
 				60E26DDD173E5F0300DF7CED /* DDProgressView.m in Sources */,
 				60E26DE2173E953B00DF7CED /* NSString+MD5.m in Sources */,
 				60E26DEB173EFB2A00DF7CED /* ScreenSaverConfig.m in Sources */,
@@ -636,6 +645,7 @@
 				60E26DC5173E5BF900DF7CED /* AFNetworkActivityIndicatorManager.m in Sources */,
 				60E26DC9173E5BF900DF7CED /* AFPropertyListRequestOperation.m in Sources */,
 				60E26DCC173E5BF900DF7CED /* AFURLConnectionOperation.m in Sources */,
+				6099F90F1790B8470004EF04 /* CRTCoreImageFilterGenerator.m in Sources */,
 				60E26DCF173E5BF900DF7CED /* AFXMLRequestOperation.m in Sources */,
 				60E26DD4173E5C1A00DF7CED /* AFDownloadRequestOperation.m in Sources */,
 				60E26DD9173E5EE000DF7CED /* AppKitCompatibility.m in Sources */,

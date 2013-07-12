@@ -7,6 +7,7 @@
 //
 
 #import "RMVideoView.h"
+#import "CRTCoreImageFilterGenerator.h"
 
 static void *RMVideoViewPlayerLayerReadyForDisplay = &RMVideoViewPlayerLayerReadyForDisplay;
 static void *RMVideoViewPlayerItemStatusContext = &RMVideoViewPlayerItemStatusContext;
@@ -112,7 +113,7 @@ static void *RMVideoViewPlayerItemStatusContext = &RMVideoViewPlayerItemStatusCo
         self.playerLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         self.playerLayer.hidden = YES;
         self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-
+        
         [self.layer addSublayer:self.playerLayer];
         [self addObserver:self forKeyPath:@"playerLayer.readyForDisplay" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:RMVideoViewPlayerLayerReadyForDisplay];
     }
